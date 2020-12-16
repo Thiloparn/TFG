@@ -1,0 +1,19 @@
+v0
+- Versión original del documento.
+
+v1
+- 1: Ya no se menciona super mario bros.
+- 2.2: Expecificación del uso de teclado y ratón. Ahora se pueden reasignar teclas.
+- 2.3.1 (v0): Borrado.
+- 2.3.1 (v1): Ampliación de la breve explicación del funcionamiento de los atajos. 
+- 2.4: Ahora la puntuación se guarda online.
+- 3: Ahora el nivel es pseudo aleatorio.
+- 3.1: Se añade la forma de esquivar obstáculos y la existencia de una única altura.
+- 4 (v1): Añadido.
+- 5 (v1): Antes 4 (v0).
+- 5.1 (v1): Añadido boton para acceder a la tabla de puntuaciones. Antes 4.1 (v0).
+- 5.2 (v1): Añadido.
+- 5.3 (v1): Antes 4.2 (v0).
+- 5.4 (v1): Antes 4.3 (v0).
+- 5.5 (v1): Antes 4.4 (v0).
+- 6 (v1): Añadido
