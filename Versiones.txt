@@ -17,3 +17,13 @@ v1
 - 5.4 (v1): Antes 4.3 (v0).
 - 5.5 (v1): Antes 4.4 (v0).
 - 6 (v1): Añadido
+
+v2
+- 2 : La sección de interfaz (antes aparatdo 5 en v1). La primera interfaz en ser mostrada pasa a ser la de Partida (antes 5.3 en v1).
+- 2.4: Nueva interfaz de reasignación de controles.
+- 3.2: Ahora se definen teclas en lugar de acciones.
+- 3.3.1: Definido el movimiento básico, saltar y deslizar.
+- 4.2: Añadido tamaño de los obstáculos. Añadida pequeña explicación de distancia mínima.
+- 5.1: Mejora explicación de la diferencia entre el movimiento hacia la derecha del de la izquierda. Mejora explicación del tratamiento del salto y el deslizamiento.
+- 5.2: Mejorada la descripcion de la estructura de las zonas.
+- 5.3: Sustituido hitbox por bounding box.
