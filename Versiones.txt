@@ -27,3 +27,9 @@ v2
 - 5.1: Mejora explicación de la diferencia entre el movimiento hacia la derecha del de la izquierda. Mejora explicación del tratamiento del salto y el deslizamiento.
 - 5.2: Mejorada la descripcion de la estructura de las zonas.
 - 5.3: Sustituido hitbox por bounding box.
+
+v3
+- 5.2: Añadido 
+- 5.3 (v3): Antes 5.2 (v2).
+- 5.4 (v3): Antes 5.3 (v2).
+- 5.5 (v3): Antes 5.4 (v2).
