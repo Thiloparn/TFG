@@ -2,5 +2,5 @@ v1:
 - Primera versión funcional.
 
 v1.1:
-- 4.3.1: Nueva estimación de tiempo de lsa actividades de las iteraciones
+- 4.3.1: Nueva estimación de tiempo de las actividades de las iteraciones
 - 4.5: Calculos actualizados
