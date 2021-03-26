@@ -2,5 +2,7 @@ v1:
 - Primera versión funcional.
 
 v1.1:
-- 4.3.1: Nueva estimación de tiempo de las actividades de las iteraciones
+- 4.1.4: Añadidos paquetes 1.2.1, 1.2.2 y 1.3.5.
+- 4.1.6: Añadidos paquetes 1.2.1, 1.2.2 y 1.3.5.
+- 4.3.1: Nueva estimación de tiempo de las actividades de las iteraciones y añadidos paquetes 1.2.1, 1.2.2 y 1.3.5.
 - 4.5: Calculos actualizados
