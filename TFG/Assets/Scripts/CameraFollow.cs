@@ -3,7 +3,8 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
 
-    public float dampTime = 0.4f;
+    public float smoothTime = 0.4f;
+    private bool following = false;
     private Vector3 velocity = Vector3.zero;
     public Transform target;
 
@@ -19,20 +20,22 @@ public class CameraFollow : MonoBehaviour {
 
         if (Mathf.Abs(velocity) < 0.01)
         {
-            follow(new Vector2(0.5f, 0.12f));
+            following = false;
         }
 
-        if (!freeRoaming())
+        if (!freeRoaming() || following)
         {
-            //Player.sharedInstance.idlePosition.x = Player.sharedInstance.rigidBody.position.x;
+            following = true;
 
             if (velocity > 0)
             {
-                follow(new Vector2(0.1f, 0.12f));
+                follow(new Vector2(0.1f, 0.12f), target.position);
             } else
             {
-                follow(new Vector2(0.9f, 0.12f));
+                follow(new Vector2(0.9f, 0.12f), target.position);
             }
+        } else {
+            follow(new Vector2(0.5f, 0.12f), Player.sharedInstance.idlePosition);
         }
     }
 
@@ -53,14 +56,15 @@ public class CameraFollow : MonoBehaviour {
         return distance < 7;
     }
 
-    void follow(Vector2 offset)
+    void follow(Vector2 offset, Vector2 targetPosition)
     {
-        Vector3 point = GetComponent<Camera>().WorldToViewportPoint(target.position);
-        Vector3 delta = target.position - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(offset.x, offset.y, point.z));
+        Vector3 tP3 = new Vector3(targetPosition.x, targetPosition.y, target.position.z);
+        Vector3 point = GetComponent<Camera>().WorldToViewportPoint(tP3);
+        Vector3 delta = tP3 - GetComponent<Camera>().ViewportToWorldPoint(new Vector3(offset.x, offset.y, point.z));
         Vector3 destination = transform.position + delta;
 
         destination = new Vector3(destination.x, offset.y, destination.z);
 
-        transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
+        transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, smoothTime);
     }
 }
