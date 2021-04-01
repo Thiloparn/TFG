@@ -9,12 +9,14 @@ public class Player : MonoBehaviour
     public Rigidbody2D rigidBody;
     public Animator animator;
     public LayerMask groundLayerMask;
+    public Obstacle obstacleHitted = null;
 
     public float speed = 7.0f;
     public float jumpForce = 17.0f;
+    public float hitForce = 10f;
+    public float distanceHitting = 5f;
     public Vector2 idlePosition = new Vector2(0, -2);
     private bool facingRight = true;
-    
 
     void Awake()
     {
@@ -31,55 +33,75 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
-
-        if (Input.GetKey(KeyCode.LeftControl) && !animator.GetBool("IsJumping"))
+        if(obstacleHitted != null)
         {
-            animator.SetBool("IsSliding", true);
+            isHitting();
+        }
+
+        if (animator.GetBool("isHitted"))
+        {
+            float orientedHitForce = hitForce;
+
+            if (facingRight && obstacleHitted.exitPoint.transform.position.x >= this.transform.position.x)
+            {
+                orientedHitForce = -hitForce;
+            }
+
+
+            rigidBody.velocity = new Vector2(orientedHitForce, -rigidBody.gravityScale); ;
+
         }
         else
         {
-            animator.SetBool("IsSliding", false);
+            animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
 
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.LeftShift) && !animator.GetBool("IsJumping"))
             {
-                rigidBody.velocity = new Vector2(speed, rigidBody.velocity.y);
-
-                if (!facingRight)
-                {
-                    facingRight = true;
-                    Vector3 scale = transform.localScale;
-                    scale.x *= -1;
-                    transform.localScale = scale;
-                }
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                rigidBody.velocity = new Vector2(-speed, rigidBody.velocity.y);
-                if (facingRight)
-                {
-                    facingRight = false;
-                    Vector3 scale = transform.localScale;
-                    scale.x *= -1;
-                    transform.localScale = scale;
-                }
+                animator.SetBool("IsSliding", true);
             }
             else
             {
-                rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
-                idlePosition = rigidBody.position;
+                animator.SetBool("IsSliding", false);
+
+                if (Input.GetKey(KeyCode.D))
+                {
+                    rigidBody.velocity = new Vector2(speed, rigidBody.velocity.y);
+
+                    if (!facingRight)
+                    {
+                        facingRight = true;
+                        Vector3 scale = transform.localScale;
+                        scale.x *= -1;
+                        transform.localScale = scale;
+                    }
+                }
+                else if (Input.GetKey(KeyCode.A))
+                {
+                    rigidBody.velocity = new Vector2(-speed, rigidBody.velocity.y);
+
+                    if (facingRight)
+                    {
+                        facingRight = false;
+                        Vector3 scale = transform.localScale;
+                        scale.x *= -1;
+                        transform.localScale = scale;
+                    }
+                }
+                else
+                {
+                    rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
+                    idlePosition = rigidBody.position;
+                }
             }
+
+            if (Input.GetKeyDown(KeyCode.Space) && !animator.GetBool("IsJumping"))
+            {
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+                animator.SetBool("IsJumping", true);
+            }
+
+            animator.SetBool("IsJumping", !IsOnTheFloor());
         }
-
-        if (Input.GetKeyDown(KeyCode.Space) && !animator.GetBool("IsJumping"))
-        {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
-            animator.SetBool("IsJumping", true);
-        }
-
-        animator.SetBool("IsJumping", !IsOnTheFloor());
-
-        
     }
 
     bool IsOnTheFloor()
@@ -94,4 +116,28 @@ public class Player : MonoBehaviour
         }
     }
 
+    void isHitting()
+    {
+        float distance = Vector2.Distance(obstacleHitted.transform.position, this.transform.position);
+        float maxDistance;
+
+        if(facingRight)
+        {
+            maxDistance = distanceHitting;
+        }
+        else
+        {
+            float obstacleSize = Vector2.Distance(obstacleHitted.transform.position, obstacleHitted.exitPoint.transform.position);
+            maxDistance = distanceHitting + obstacleSize;
+        }
+
+        if(distance < maxDistance)
+        {
+            animator.SetBool("isHitted", true);
+        } else
+        {
+            animator.SetBool("isHitted", false);
+            obstacleHitted = null;
+        }
+    }
 }

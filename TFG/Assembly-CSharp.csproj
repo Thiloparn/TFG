@@ -58,10 +58,11 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Menu.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
-    <Compile Include="Assets\Scripts\Finish.cs" />
-    <Compile Include="Assets\Scripts\LevelGenerator.cs" />
     <Compile Include="Assets\Scripts\Floor.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\LevelGenerator.cs" />
+    <Compile Include="Assets\Scripts\Finish.cs" />
+    <Compile Include="Assets\Scripts\Obstacle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraFollow : MonoBehaviour {
 
-    public float smoothTime = 0.4f;
+    public float smoothTime = 0.5f;
     private bool following = false;
     private Vector3 velocity = Vector3.zero;
     public Transform target;
@@ -23,7 +23,7 @@ public class CameraFollow : MonoBehaviour {
             following = false;
         }
 
-        if (!freeRoaming() || following)
+        if (!(Vector2.Distance(Player.sharedInstance.idlePosition, Player.sharedInstance.rigidBody.position) < 7) || following)
         {
             following = true;
 
@@ -37,23 +37,6 @@ public class CameraFollow : MonoBehaviour {
         } else {
             follow(new Vector2(0.5f, 0.12f), Player.sharedInstance.idlePosition);
         }
-    }
-
-    bool freeRoaming()
-    {
-        float num1 = Player.sharedInstance.idlePosition.x;
-        float num2 = Player.sharedInstance.rigidBody.position.x;
-        float distance = 0;
-
-        if(num1 >= num2)
-        {
-            distance = num1 - num2;
-        } else
-        {
-            distance = num2 - num1;
-        }
-
-        return distance < 7;
     }
 
     void follow(Vector2 offset, Vector2 targetPosition)
