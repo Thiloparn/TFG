@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraFollow : MonoBehaviour {
+public class CameraFollow : MonoBehaviour 
+{
 
-    public float smoothTime = 0.5f;
+    private float smoothTime;
     private bool following = false;
     private Vector3 velocity = Vector3.zero;
     public Transform target;
@@ -14,9 +15,20 @@ public class CameraFollow : MonoBehaviour {
         Application.targetFrameRate = 60;
     }
 
+
     void Update () 
     {
-        float velocity = Player.sharedInstance.rigidBody.velocity.x;
+        float velocity;
+        if (Player.sharedInstance.isUsingShortcut)
+        {
+            velocity = 28f;
+            smoothTime = 0f;
+        }
+        else
+        {
+            velocity = Player.sharedInstance.rigidBody.velocity.x;
+            smoothTime = 0.5f;
+        }
 
         if (Mathf.Abs(velocity) < 0.01)
         {
@@ -30,14 +42,18 @@ public class CameraFollow : MonoBehaviour {
             if (velocity > 0)
             {
                 follow(new Vector2(0.1f, 0.12f), target.position);
-            } else
+            } 
+            else
             {
                 follow(new Vector2(0.9f, 0.12f), target.position);
             }
-        } else {
+        } 
+        else 
+        {
             follow(new Vector2(0.5f, 0.12f), Player.sharedInstance.idlePosition);
         }
     }
+
 
     void follow(Vector2 offset, Vector2 targetPosition)
     {

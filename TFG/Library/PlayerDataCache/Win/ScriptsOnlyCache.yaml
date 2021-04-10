@@ -6,7 +6,9 @@ ScriptsOnlyBuild:
     - Floor
     - LevelGenerator
     - Menu
+    - Obstacle
     - Player
+    - Shortcut
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
@@ -75,31 +77,35 @@ ScriptsOnlyBuild:
     - Class: 111
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1524}
+      Script: {instanceID: 1532}
     - Class: 114
-      Script: {instanceID: 2110}
+      Script: {instanceID: 2118}
     - Class: 114
-      Script: {instanceID: 2480}
+      Script: {instanceID: 2488}
     - Class: 114
-      Script: {instanceID: 2520}
+      Script: {instanceID: 2528}
     - Class: 114
-      Script: {instanceID: 2628}
+      Script: {instanceID: 2636}
     - Class: 114
-      Script: {instanceID: 2798}
+      Script: {instanceID: 2806}
     - Class: 114
-      Script: {instanceID: 2936}
+      Script: {instanceID: 2944}
     - Class: 114
-      Script: {instanceID: 3010}
+      Script: {instanceID: 3018}
     - Class: 114
-      Script: {instanceID: 3112}
+      Script: {instanceID: 3120}
     - Class: 114
-      Script: {instanceID: 3764}
+      Script: {instanceID: 3430}
     - Class: 114
-      Script: {instanceID: 4614}
+      Script: {instanceID: 3774}
     - Class: 114
-      Script: {instanceID: 20334}
+      Script: {instanceID: 3996}
     - Class: 114
-      Script: {instanceID: 20476}
+      Script: {instanceID: 4548}
+    - Class: 114
+      Script: {instanceID: 4628}
+    - Class: 114
+      Script: {instanceID: 17406}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -138,21 +144,21 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1524}
+      Script: {instanceID: 1532}
     - Class: 114
-      Script: {instanceID: 2110}
+      Script: {instanceID: 2118}
     - Class: 114
-      Script: {instanceID: 2480}
+      Script: {instanceID: 2488}
     - Class: 114
-      Script: {instanceID: 2520}
+      Script: {instanceID: 2528}
     - Class: 114
-      Script: {instanceID: 2628}
+      Script: {instanceID: 2636}
     - Class: 114
-      Script: {instanceID: 2798}
+      Script: {instanceID: 2806}
     - Class: 114
-      Script: {instanceID: 3010}
+      Script: {instanceID: 3018}
     - Class: 114
-      Script: {instanceID: 3112}
+      Script: {instanceID: 3120}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -468,6 +474,12 @@ ScriptsOnlyBuild:
     className: Outline
   - hash:
       serializedVersion: 2
+      Hash: b633ed15d6b8e45d4575560beb11dfa2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Floor
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -540,7 +552,7 @@ ScriptsOnlyBuild:
     className: EventTrigger
   - hash:
       serializedVersion: 2
-      Hash: 1941b520a33f10a476db28b54b6cf2ee
+      Hash: 90427a6caaa4cfe52326c1a2ea3c16fe
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -580,6 +592,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Mask
+  - hash:
+      serializedVersion: 2
+      Hash: a7ccae3b59dec623e38dcaf25c0f10a7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Obstacle
   - hash:
       serializedVersion: 2
       Hash: 523ce309f50d9eee6a8fc0e2f86c9c97
@@ -666,6 +684,12 @@ ScriptsOnlyBuild:
     className: TMP_SubMeshUI
   - hash:
       serializedVersion: 2
+      Hash: 3876ec593f5afb016c1f6bd27ce7871d
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LevelGenerator
+  - hash:
+      serializedVersion: 2
       Hash: fd68d84f33fad85aac38f2739c0ee270
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
@@ -714,16 +738,10 @@ ScriptsOnlyBuild:
     className: FabrikSolver2D
   - hash:
       serializedVersion: 2
-      Hash: fdb87ed774f9a6f6fe707d4fcf5549da
+      Hash: 9318974679a7eb77557c956e1b44bf83
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: LevelGenerator
-  - hash:
-      serializedVersion: 2
-      Hash: b633ed15d6b8e45d4575560beb11dfa2
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Floor
+    className: Shortcut
   platform: 5
   scenePathNames:
   - Assets/Scenes/Menu.unity
