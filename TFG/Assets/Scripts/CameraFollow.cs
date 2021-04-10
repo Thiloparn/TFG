@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraFollow : MonoBehaviour {
+public class CameraFollow : MonoBehaviour 
+{
 
-    public float smoothTime = 0.4f;
+    private float smoothTime;
     private bool following = false;
     private Vector3 velocity = Vector3.zero;
     public Transform target;
@@ -14,47 +15,45 @@ public class CameraFollow : MonoBehaviour {
         Application.targetFrameRate = 60;
     }
 
+
     void Update () 
     {
-        float velocity = Player.sharedInstance.rigidBody.velocity.x;
+        float velocity;
+        if (Player.sharedInstance.isUsingShortcut)
+        {
+            velocity = 28f;
+            smoothTime = 0f;
+        }
+        else
+        {
+            velocity = Player.sharedInstance.rigidBody.velocity.x;
+            smoothTime = 0.5f;
+        }
 
         if (Mathf.Abs(velocity) < 0.01)
         {
             following = false;
         }
 
-        if (!freeRoaming() || following)
+        if (!(Vector2.Distance(Player.sharedInstance.idlePosition, Player.sharedInstance.rigidBody.position) < 7) || following)
         {
             following = true;
 
             if (velocity > 0)
             {
                 follow(new Vector2(0.1f, 0.12f), target.position);
-            } else
+            } 
+            else
             {
                 follow(new Vector2(0.9f, 0.12f), target.position);
             }
-        } else {
+        } 
+        else 
+        {
             follow(new Vector2(0.5f, 0.12f), Player.sharedInstance.idlePosition);
         }
     }
 
-    bool freeRoaming()
-    {
-        float num1 = Player.sharedInstance.idlePosition.x;
-        float num2 = Player.sharedInstance.rigidBody.position.x;
-        float distance = 0;
-
-        if(num1 >= num2)
-        {
-            distance = num1 - num2;
-        } else
-        {
-            distance = num2 - num1;
-        }
-
-        return distance < 7;
-    }
 
     void follow(Vector2 offset, Vector2 targetPosition)
     {
