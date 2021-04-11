@@ -10,6 +10,9 @@ public class LevelGenerator : MonoBehaviour
     public Floor floor;
     public List<Floor> floorsSpawned = new List<Floor>();
 
+    public Background background;
+    private List<Background> backgroundSpawned = new List<Background>();
+
     public List<Obstacle> obstacles;
     private List<Obstacle> obstaclesSpawned = new List<Obstacle>();
     private int previousIndex = 10, prePreviousIndex = 10;
@@ -25,7 +28,7 @@ public class LevelGenerator : MonoBehaviour
         sharedInstance = this;
         Random.InitState((int) System.DateTime.Now.Ticks);
 
-        spawnFloors();
+        spawnFloorsAndBackgounds();
 
         spawnObstacles();
 
@@ -33,19 +36,24 @@ public class LevelGenerator : MonoBehaviour
     }
 
 
-    void spawnFloors()
+    void spawnFloorsAndBackgounds()
     {
         int length = 60;
         for (int i = 0; i < length; i++)
         {
             Floor floorToSpawn = (Floor)Instantiate(floor, this.transform.position, Quaternion.identity);
 
+            Vector3 backgroundInitialPosition = new Vector3(this.transform.position.x, this.transform.position.y + 64, this.transform.position.z);
+            Background backgroundToSpawn = (Background)Instantiate(background, backgroundInitialPosition, Quaternion.identity);
+
             if (i != 0)
             {
                 floorToSpawn.transform.position = floorsSpawned[i - 1].exitPoint.transform.position;
+                backgroundToSpawn.transform.position = backgroundSpawned[i - 1].exitPoint.transform.position;
             }
 
             floorsSpawned.Add(floorToSpawn);
+            backgroundSpawned.Add(backgroundToSpawn);
 
             if (i == length - 1)
             {
@@ -57,7 +65,7 @@ public class LevelGenerator : MonoBehaviour
 
     void spawnObstacles()
     {
-        Vector3 firstObstaclePosition = new Vector3(floorsSpawned[1].exitPoint.transform.position.x, -4f, floorsSpawned[1].exitPoint.transform.position.z);
+        Vector3 firstObstaclePosition = new Vector3(floorsSpawned[1].exitPoint.transform.position.x, -96f, floorsSpawned[1].exitPoint.transform.position.z);
 
         Obstacle firstObstacleToSpawn = (Obstacle)Instantiate(obstacles[randomIndex()], firstObstaclePosition, Quaternion.identity);
         firstObstacleToSpawn.Initialize();
@@ -67,7 +75,7 @@ public class LevelGenerator : MonoBehaviour
         while (floorsSpawned[floorsSpawned.Count - 1].exitPoint.transform.position.x - obstaclesSpawned[obstaclesSpawned.Count - 1].exitPoint.position.x > 0)
         {
             Vector3 lastExitPoint = obstaclesSpawned[obstaclesSpawned.Count - 1].exitPoint.position;
-            Vector3 obstaclePosition = new Vector3(Random.Range(lastExitPoint.x + 10f, lastExitPoint.x + 20f), lastExitPoint.y, lastExitPoint.z);
+            Vector3 obstaclePosition = new Vector3(Random.Range(lastExitPoint.x + 96f, lastExitPoint.x + 160f), lastExitPoint.y, lastExitPoint.z);
             Obstacle obstacleToSpawn = (Obstacle)Instantiate(obstacles[randomIndex()], obstaclePosition, Quaternion.identity);
             obstacleToSpawn.Initialize();
             obstaclesSpawned.Add(obstacleToSpawn);
@@ -96,7 +104,7 @@ public class LevelGenerator : MonoBehaviour
 
     void spawnShortcut()
     {
-        if (Random.Range(0, 2) == 0)
+        if (/*Random.Range(0, 2) == 0*/ true)
         {
             int random;
             if (shortcuts[0].start == "Beginning")
@@ -108,7 +116,7 @@ public class LevelGenerator : MonoBehaviour
                 random = Random.Range(20, 41);
             }
 
-            Vector3 shortcutPosition = new Vector3(floorsSpawned[random].transform.position.x, -4f, floorsSpawned[Random.Range(0, 21)].transform.position.z);
+            Vector3 shortcutPosition = new Vector3(floorsSpawned[random].transform.position.x, -96f, floorsSpawned[Random.Range(0, 21)].transform.position.z);
             shorcutSpawned = (Shortcut)Instantiate(shortcuts[0], shortcutPosition, Quaternion.identity);
             checkShortcutPosition();
         }
@@ -138,7 +146,7 @@ public class LevelGenerator : MonoBehaviour
 
             if((b1 && b2) || (b3 && b4))
             {
-                shorcutSpawned.transform.position = new Vector3(obstacleChecked.exitPoint.transform.position.x + 2f, shorcutSpawned.transform.position.y, shorcutSpawned.transform.position.z);
+                shorcutSpawned.transform.position = new Vector3(obstacleChecked.exitPoint.transform.position.x + 32f, shorcutSpawned.transform.position.y, shorcutSpawned.transform.position.z);
                 break;
             } 
         }

@@ -12,12 +12,12 @@ public class Player : MonoBehaviour
     public Obstacle obstacleHitted = null;
     public SpriteRenderer spriteRenderer;
 
-    public float speed = 7.0f, jumpForce = 17.0f, hitForce = 10f, distanceHitting = 5;
-    public int slidingTime = 70;
+    public float speed, jumpForce, hitForce, distanceHitting;
+    public int slidingTime;
     private float timerHit = 1.0f, timerSlide = 1.0f, timerInvincible = 0f;
-    public Vector2 idlePosition = new Vector2(0, -2);
+    public Vector2 idlePosition;
     private bool isFacingRight = true;
-    public bool isInvincible = false, isUsingShortcut = false;
+    public bool isInvincible, isUsingShortcut;
 
 
     void Awake()
@@ -148,7 +148,18 @@ public class Player : MonoBehaviour
         }
 
         timerHit += Time.deltaTime * 10;
-        rigidBody.velocity = new Vector2(orientedHitForce, -rigidBody.gravityScale * timerHit);
+
+        float verticalForce;
+        if (IsOnTheFloor())
+        {
+            verticalForce = 0;
+        }
+        else
+        {
+            verticalForce = -rigidBody.gravityScale * timerHit;
+        }
+
+        rigidBody.velocity = new Vector2(orientedHitForce, verticalForce);
     }
 
 

@@ -51,7 +51,7 @@ public class Shortcut : MonoBehaviour
 
     private void Update()
     {
-        if(Vector3.Distance(Player.sharedInstance.transform.position, transform.position) < 20f)
+        if(Vector3.Distance(Player.sharedInstance.transform.position, transform.position) < 384f)
         {
             if(timer > 0)
             {
@@ -71,7 +71,7 @@ public class Shortcut : MonoBehaviour
             meshRenderer.enabled = false;
             if (transform.position.x < goTo)
             {
-                rigidBody.velocity = new Vector2(28f, 0f);
+                rigidBody.velocity = new Vector2(864f, 0f);
                 Player.sharedInstance.transform.position = new Vector3(transform.position.x, Player.sharedInstance.transform.position.y, Player.sharedInstance.transform.position.z);
             }
             else
