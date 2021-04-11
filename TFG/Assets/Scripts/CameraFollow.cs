@@ -21,7 +21,7 @@ public class CameraFollow : MonoBehaviour
         float velocity;
         if (Player.sharedInstance.isUsingShortcut)
         {
-            velocity = 28f;
+            velocity = 864f;
             smoothTime = 0f;
         }
         else
@@ -35,7 +35,7 @@ public class CameraFollow : MonoBehaviour
             following = false;
         }
 
-        if (!(Vector2.Distance(Player.sharedInstance.idlePosition, Player.sharedInstance.rigidBody.position) < 7) || following)
+        if (Vector2.Distance(Player.sharedInstance.idlePosition, Player.sharedInstance.rigidBody.position) >= 128 || following)
         {
             following = true;
 
