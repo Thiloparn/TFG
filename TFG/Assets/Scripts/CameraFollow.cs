@@ -4,6 +4,7 @@ using System.Collections;
 public class CameraFollow : MonoBehaviour 
 {
 
+    public static CameraFollow sharedInstance;
     private float smoothTime;
     private bool following = false;
     private Vector3 velocity = Vector3.zero;
@@ -12,45 +13,49 @@ public class CameraFollow : MonoBehaviour
 
     void Awake() 
     {
+        sharedInstance = this;
         Application.targetFrameRate = 60;
     }
 
 
     void Update () 
     {
-        float velocity;
-        if (Player.sharedInstance.isUsingShortcut)
+        if (Mathf.Abs(Player.sharedInstance.transform.position.x - transform.position.x) >= 1)
         {
-            velocity = 864f;
-            smoothTime = 0f;
-        }
-        else
-        {
-            velocity = Player.sharedInstance.rigidBody.velocity.x;
-            smoothTime = 0.5f;
-        }
-
-        if (Mathf.Abs(velocity) < 0.01)
-        {
-            following = false;
-        }
-
-        if (Vector2.Distance(Player.sharedInstance.idlePosition, Player.sharedInstance.rigidBody.position) >= 128 || following)
-        {
-            following = true;
-
-            if (velocity > 0)
+            float velocity;
+            if (Player.sharedInstance.isUsingShortcut)
             {
-                follow(new Vector2(0.1f, 0.12f), target.position);
-            } 
+                velocity = 864f;
+                smoothTime = 0f;
+            }
             else
             {
-                follow(new Vector2(0.9f, 0.12f), target.position);
+                velocity = Player.sharedInstance.rigidBody.velocity.x;
+                smoothTime = 0.5f;
             }
-        } 
-        else 
-        {
-            follow(new Vector2(0.5f, 0.12f), Player.sharedInstance.idlePosition);
+
+            if (Mathf.Abs(velocity) < 0.01)
+            {
+                following = false;
+            }
+
+            if (Vector2.Distance(Player.sharedInstance.idlePosition, Player.sharedInstance.transform.position) >= 128 || following)
+            {
+                following = true;
+
+                if (velocity > 0)
+                {
+                    follow(new Vector2(0.1f, 0.12f), target.position);
+                }
+                else
+                {
+                    follow(new Vector2(0.9f, 0.12f), target.position);
+                }
+            }
+            else
+            {
+                follow(new Vector2(0.5f, 0.12f), Player.sharedInstance.idlePosition);
+            }
         }
     }
 
