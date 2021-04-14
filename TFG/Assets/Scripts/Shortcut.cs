@@ -24,18 +24,36 @@ public class Shortcut : MonoBehaviour
         {
             if (timer == 0f && Input.GetKeyDown(KeyCode.Mouse1))
             {
-                int random;
-                if(end == "Halfway")
+                if (LevelGenerator.sharedInstance.zone == "Metropolis")
                 {
-                    random = Random.Range(20, 41);
-                } 
+                    int random;
+                    if (end == "Halfway")
+                    {
+                        random = Random.Range(20, 41);
+                    }
+                    else
+                    {
+                        random = Random.Range(40, 61);
+                    }
+
+                    goTo = LevelGenerator.sharedInstance.floorsSpawned[random].transform.position.x;
+                    isInUse = true;
+                }
                 else
                 {
-                    random = Random.Range(40, 61);
-                }
+                    if(LevelGenerator.sharedInstance.zone == "Community")
+                    {
+                        LevelGenerator.sharedInstance.level = 2;
+                        
+                    }
+                    else
+                    {
+                        LevelGenerator.sharedInstance.level = 4;
+                    }
 
-                goTo = LevelGenerator.sharedInstance.floorsSpawned[random].transform.position.x;
-                isInUse = true;
+                    LevelGenerator.sharedInstance.changeLevel = true;
+                    LevelGenerator.sharedInstance.useStairOrElevator();
+                }
             }
         }
     }
@@ -43,7 +61,7 @@ public class Shortcut : MonoBehaviour
 
     private void Awake()
     {
-        timer = Random.Range(3, maxtime + 1);
+        timer = Random.Range(5, maxtime + 1);
         meshRenderer.sortingLayerName = "UI";
         rigidBody = GetComponent<Rigidbody2D>();
     }
@@ -81,7 +99,6 @@ public class Shortcut : MonoBehaviour
                 Player.sharedInstance.isInvincible = true;
                 isInUse = false;
                 isActive = false;
-                
             }
         }
     }
