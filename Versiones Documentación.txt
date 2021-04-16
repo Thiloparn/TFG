@@ -19,5 +19,5 @@ v1.3:
 v1.4:
 - 4.2: Nueva política de versionado de documentos y de gestión de ramas del repositorio.
 
-v2.1:
-- Correción de errores en los informes de cambio.
+v2.0:
+- Versión inicial de la segunda iteración.
