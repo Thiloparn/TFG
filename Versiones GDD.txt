@@ -39,3 +39,7 @@ v3.1
 
 v3.2
 - Cambio en la generación de los niveles
+
+v3.3
+-4.2: Cambios de zonas de aparición de algunos obstáculos y redefinición de los Arboles.
+- 4.3 y 5.4: Cambios en los tiempos de espera y de uso de los atajos.

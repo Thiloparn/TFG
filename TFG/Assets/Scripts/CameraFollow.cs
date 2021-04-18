@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraFollow : MonoBehaviour {
+public class CameraFollow : MonoBehaviour 
+{
 
-    public float smoothTime = 0.4f;
+    public static CameraFollow sharedInstance;
+    private float smoothTime;
     private bool following = false;
     private Vector3 velocity = Vector3.zero;
     public Transform target;
@@ -11,50 +13,52 @@ public class CameraFollow : MonoBehaviour {
 
     void Awake() 
     {
+        sharedInstance = this;
         Application.targetFrameRate = 60;
     }
 
+
     void Update () 
     {
-        float velocity = Player.sharedInstance.rigidBody.velocity.x;
-
-        if (Mathf.Abs(velocity) < 0.01)
+        if (Mathf.Abs(Player.sharedInstance.transform.position.x - transform.position.x) >= 1)
         {
-            following = false;
-        }
-
-        if (!freeRoaming() || following)
-        {
-            following = true;
-
-            if (velocity > 0)
+            float velocity;
+            if (Player.sharedInstance.isUsingShortcut)
             {
-                follow(new Vector2(0.1f, 0.12f), target.position);
-            } else
-            {
-                follow(new Vector2(0.9f, 0.12f), target.position);
+                velocity = 864f;
+                smoothTime = 0f;
             }
-        } else {
-            follow(new Vector2(0.5f, 0.12f), Player.sharedInstance.idlePosition);
+            else
+            {
+                velocity = Player.sharedInstance.rigidBody.velocity.x;
+                smoothTime = 0.5f;
+            }
+
+            if (Mathf.Abs(velocity) < 0.01)
+            {
+                following = false;
+            }
+
+            if (Vector2.Distance(Player.sharedInstance.idlePosition, Player.sharedInstance.transform.position) >= 128 || following)
+            {
+                following = true;
+
+                if (velocity > 0)
+                {
+                    follow(new Vector2(0.1f, 0.12f), target.position);
+                }
+                else
+                {
+                    follow(new Vector2(0.9f, 0.12f), target.position);
+                }
+            }
+            else
+            {
+                follow(new Vector2(0.5f, 0.12f), Player.sharedInstance.idlePosition);
+            }
         }
     }
 
-    bool freeRoaming()
-    {
-        float num1 = Player.sharedInstance.idlePosition.x;
-        float num2 = Player.sharedInstance.rigidBody.position.x;
-        float distance = 0;
-
-        if(num1 >= num2)
-        {
-            distance = num1 - num2;
-        } else
-        {
-            distance = num2 - num1;
-        }
-
-        return distance < 7;
-    }
 
     void follow(Vector2 offset, Vector2 targetPosition)
     {
