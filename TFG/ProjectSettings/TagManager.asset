@@ -49,6 +49,12 @@ TagManager:
   - name: Ground
     uniqueID: 1804163563
     locked: 0
+  - name: Shortcuts
+    uniqueID: 3327373075
+    locked: 0
+  - name: Shortcuts text
+    uniqueID: 2692458161
+    locked: 0
   - name: Obstacle
     uniqueID: 2079858129
     locked: 0

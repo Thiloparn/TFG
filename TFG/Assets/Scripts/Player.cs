@@ -12,7 +12,8 @@ public class Player : MonoBehaviour
     public Obstacle obstacleHitted = null;
     public SpriteRenderer spriteRenderer;
 
-    public float speed, jumpForce, hitForce, distanceHitting;
+    public List<float> speeds = new List<float>();
+    public float actualSpeed, jumpForce, hitForce, distanceHitting;
     public int slidingTime;
     private float timerHit = 1.0f, timerSlide = 1.0f, timerInvincible = 0f;
     public Vector2 idlePosition;
@@ -23,7 +24,6 @@ public class Player : MonoBehaviour
     void Awake()
     {
         sharedInstance = this;
-        rigidBody = GetComponent<Rigidbody2D>();
     }
 
 
@@ -31,62 +31,83 @@ public class Player : MonoBehaviour
     {
         rigidBody.position = idlePosition;
         rigidBody.velocity = new Vector2(0, 0);
+        actualSpeed = speeds[0];
     }
 
 
     void Update()
     {
-        if (isUsingShortcut)
+        if(transform.position.y <= -97f)
         {
-            spriteRenderer.enabled = false;
-            rigidBody.velocity = new Vector2(0, 0);
-        }
+            transform.position = new Vector3(transform.position.x, -96f, transform.position.z);
+        } 
         else
         {
-            spriteRenderer.enabled = true;
-
-            invincible();
-
-            isHitting();
-
-            if (animator.GetBool("isHitted"))
+            if (isUsingShortcut)
             {
-                beingHitted();
+                spriteRenderer.enabled = false;
+                rigidBody.velocity = new Vector2(0, 0);
             }
             else
             {
-                timerHit = 1.0f;
-                animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
+                spriteRenderer.enabled = true;
 
-                if (Input.GetKey(KeyCode.LeftShift) && !animator.GetBool("IsJumping"))
+                invincible();
+
+                isHitting();
+
+                if (animator.GetBool("IsHitted"))
                 {
-                    animator.SetBool("IsSliding", true);
-                    timerSlide -= Time.deltaTime / slidingTime;
-                    rigidBody.velocity = new Vector2(rigidBody.velocity.x * timerSlide, rigidBody.velocity.y);
+                    beingHitted();
                 }
                 else
                 {
-                    animator.SetBool("IsSliding", false);
-                    timerSlide = 1.0f;
+                    timerHit = 1.0f;
+                    animator.SetFloat("Speed", Mathf.Abs(rigidBody.velocity.x));
 
-                    if (Input.GetKey(KeyCode.D))
+                    if (Input.GetKey(KeyCode.LeftShift) && !animator.GetBool("IsJumping"))
                     {
-                        moveRight();
-                    }
-                    else if (Input.GetKey(KeyCode.A))
-                    {
-                        moveLeft();
+                        animator.SetBool("IsSliding", true);
+                        timerSlide -= Time.deltaTime / slidingTime;
+                        timerSlide = timerSlide <= 0 ? 0 : timerSlide;
+                        float direction = isFacingRight ? 1f : -1f;
+                        float slidingVelocity = direction * actualSpeed * timerSlide;
+                        rigidBody.velocity = new Vector2(slidingVelocity, rigidBody.velocity.y);
                     }
                     else
                     {
-                        rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
+                        animator.SetBool("IsSliding", false);
+                        timerSlide = 1.0f;
+
+                        if (Input.GetKey(KeyCode.D))
+                        {
+                            moveRight();
+                        }
+                        else if (Input.GetKey(KeyCode.A))
+                        {
+                            moveLeft();
+                        }
+                        else
+                        {
+                            rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
+                        }
+                    }
+
+                    jump();
+
+                    animator.SetBool("IsJumping", !IsOnTheFloor());
+
+                    if(Mathf.Abs(rigidBody.velocity.x) < 0.01)
+                    {
                         idlePosition = rigidBody.position;
                     }
-                }
 
-                jump();
-                
-                animator.SetBool("IsJumping", !IsOnTheFloor());
+                    if(rigidBody.velocity.y < 0)
+                    {
+                        float yVelocity = transform.position.y + rigidBody.velocity.y * Time.deltaTime <= -96f ? 0f : rigidBody.velocity.y;
+                        rigidBody.velocity = new Vector2(rigidBody.velocity.x, yVelocity);
+                    }
+                }
             }
         }
     }
@@ -125,11 +146,11 @@ public class Player : MonoBehaviour
 
             if (distance < maxDistance || !IsOnTheFloor())
             {
-                animator.SetBool("isHitted", true);
+                animator.SetBool("IsHitted", true);
             }
             else
             {
-                animator.SetBool("isHitted", false);
+                animator.SetBool("IsHitted", false);
                 obstacleHitted = null;
                 rigidBody.velocity = new Vector2(0f, 0f);
             }
@@ -165,7 +186,7 @@ public class Player : MonoBehaviour
 
     void moveRight()
     {
-        rigidBody.velocity = new Vector2(speed, rigidBody.velocity.y);
+        rigidBody.velocity = new Vector2(actualSpeed, rigidBody.velocity.y);
 
         if (!isFacingRight)
         {
@@ -179,7 +200,7 @@ public class Player : MonoBehaviour
 
     void moveLeft()
     {
-        rigidBody.velocity = new Vector2(-speed, rigidBody.velocity.y);
+        rigidBody.velocity = new Vector2(-actualSpeed, rigidBody.velocity.y);
 
         if (isFacingRight)
         {

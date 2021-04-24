@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour
 
     void Update () 
     {
-        if (Mathf.Abs(Player.sharedInstance.transform.position.x - transform.position.x) >= 1)
+        if (Mathf.Abs(Player.sharedInstance.transform.position.x - transform.position.x) >= 1 && !Player.sharedInstance.animator.GetBool("IsHitted"))
         {
             float velocity;
             if (Player.sharedInstance.isUsingShortcut)
@@ -34,7 +34,7 @@ public class CameraFollow : MonoBehaviour
                 smoothTime = 0.5f;
             }
 
-            if (Mathf.Abs(velocity) < 0.01)
+            if (Mathf.Abs(velocity) < 10)
             {
                 following = false;
             }

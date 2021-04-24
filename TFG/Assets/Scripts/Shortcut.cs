@@ -14,13 +14,31 @@ public class Shortcut : MonoBehaviour
     public float timer;
     public string start, end, zone;
 
+    private bool isUsable = true;
     private bool isInUse = false, isActive = true;
     private float goTo;
 
+    private void OnTriggerEnter2D(Collider2D theObject)
+    {
+        if (theObject.tag == "Obstacle")
+        {
+            isUsable = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D theObject)
+    {
+        isUsable = true;
+    }
 
     void OnTriggerStay2D(Collider2D theObject)
     {
-        if (theObject.tag == "Player" && isActive)   
+        if (theObject.tag == "Obstacle")
+        {
+            isUsable = false;
+        }
+
+        if (theObject.tag == "Player" && isActive && isUsable)   
         {
             if (timer == 0f && Input.GetKeyDown(KeyCode.Mouse1))
             {
@@ -62,7 +80,7 @@ public class Shortcut : MonoBehaviour
     private void Awake()
     {
         timer = Random.Range(5, maxtime + 1);
-        meshRenderer.sortingLayerName = "UI";
+        meshRenderer.sortingLayerName = "Shortcuts text";
         rigidBody = GetComponent<Rigidbody2D>();
     }
 

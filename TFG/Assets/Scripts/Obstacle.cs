@@ -6,6 +6,7 @@ public class Obstacle : MonoBehaviour
 {
 
     private Rigidbody2D rigidBody;
+    public BoxCollider2D boxCollider;
     public Transform exitPoint;
 
     public bool isStatic, isBreakable;
@@ -17,7 +18,7 @@ public class Obstacle : MonoBehaviour
     {
         if (theObject.tag == "Player" && !Player.sharedInstance.isInvincible && !Player.sharedInstance.isUsingShortcut)
         { 
-            Player.sharedInstance.animator.SetBool("isHitted", true);
+            Player.sharedInstance.animator.SetBool("IsHitted", true);
             Player.sharedInstance.obstacleHitted = this;
             Player.sharedInstance.isInvincible = true;
         }
