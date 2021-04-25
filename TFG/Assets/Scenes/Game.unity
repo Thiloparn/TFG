@@ -6783,7 +6783,6 @@ MonoBehaviour:
   slider2: {fileID: 270838123}
   slider3: {fileID: 140888530}
   player: {fileID: 1348672582}
-  clicks: 0
 --- !u!1001 &2119204859
 PrefabInstance:
   m_ObjectHideFlags: 0

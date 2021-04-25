@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
         rigidBody.position = idlePosition;
         rigidBody.velocity = new Vector2(0, 0);
         actualSpeed = speeds[0];
+        slidingTime = 5;
     }
 
 

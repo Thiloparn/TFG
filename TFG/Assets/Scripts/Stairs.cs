@@ -32,7 +32,7 @@ public class Stairs : MonoBehaviour
             isUsable = false;
         }
 
-        if (theObject.tag == "Player" && Input.GetKeyDown(KeyCode.Mouse1) && isUsable)
+        if (theObject.tag == "Player" && Input.GetKeyDown(KeyCode.Mouse1) && isUsable && Player.sharedInstance.animator.GetBool("IsHitted"))
         {
             LevelGenerator.sharedInstance.level = goToLevel;
             LevelGenerator.sharedInstance.changeLevel = true;

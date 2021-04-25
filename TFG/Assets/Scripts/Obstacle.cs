@@ -21,6 +21,7 @@ public class Obstacle : MonoBehaviour
             Player.sharedInstance.animator.SetBool("IsHitted", true);
             Player.sharedInstance.obstacleHitted = this;
             Player.sharedInstance.isInvincible = true;
+            SpeedUI.sharedInstance.obstacleHitted();
         }
     }
 
