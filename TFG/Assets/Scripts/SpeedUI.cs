@@ -25,7 +25,7 @@ public class SpeedUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !player.isUsingShortcut && !player.animator.GetBool("IsJumping") && !player.animator.GetBool("IsSliding") && !player.animator.GetBool("IsHitted"))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !player.isUsingShortcut && !player.animator.GetBool("IsJumping") && !player.animator.GetBool("IsSliding") && !player.animator.GetBool("IsHitted") && !ItemsUI.sharedInstance.isActive)
         {
             timerClicks = 0;
             clicks += 1;

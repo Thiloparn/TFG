@@ -6,10 +6,11 @@ public class Obstacle : MonoBehaviour
 {
 
     private Rigidbody2D rigidBody;
+    public SpriteRenderer spriteRenderer;
     public BoxCollider2D boxCollider;
     public Transform exitPoint;
 
-    public bool isStatic, isBreakable;
+    public bool isStatic, isBreakable, isBroken;
     public float speed;
     public List<string> zone = new List<string>();
 
@@ -19,7 +20,9 @@ public class Obstacle : MonoBehaviour
         if (theObject.tag == "Player" && !Player.sharedInstance.isInvincible && !Player.sharedInstance.isUsingShortcut)
         { 
             Player.sharedInstance.animator.SetBool("IsHitted", true);
-            Player.sharedInstance.obstacleHitted = this;
+            Player.sharedInstance.obstacleHittedInfo.Add(this.transform.position);
+            Player.sharedInstance.obstacleHittedInfo.Add(this.exitPoint.transform.position);
+            Player.sharedInstance.obstacleHittedInfo.Add(this.rigidBody.velocity);
             Player.sharedInstance.isInvincible = true;
             SpeedUI.sharedInstance.obstacleHitted();
         }
@@ -42,6 +45,13 @@ public class Obstacle : MonoBehaviour
     {
         if(!this.isStatic){
             this.rigidBody.velocity = new Vector2(this.speed, this.rigidBody.velocity.y);
+        }
+
+        if (isBroken)
+        {
+            LevelGenerator.sharedInstance.obstaclesSpawned.Remove(this);
+            spriteRenderer.enabled = false;
+            Destroy(this);
         }
     }
 

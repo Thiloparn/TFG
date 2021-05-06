@@ -14,7 +14,7 @@ public class Shortcut : MonoBehaviour
     public float timer;
     public string start, end, zone;
 
-    private bool isUsable = true;
+    public bool isUsable = true;
     private bool isInUse = false, isActive = true;
     private float goTo;
 
@@ -23,6 +23,43 @@ public class Shortcut : MonoBehaviour
         if (theObject.tag == "Obstacle")
         {
             isUsable = false;
+        }
+
+        if (theObject.tag == "Player" && isActive && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
+        {
+            if (timer == 0f && Input.GetKeyDown(KeyCode.Q))
+            {
+                if (LevelGenerator.sharedInstance.zone == "Metropolis")
+                {
+                    int random;
+                    if (end == "Halfway")
+                    {
+                        random = Random.Range(20, 41);
+                    }
+                    else
+                    {
+                        random = Random.Range(40, 61);
+                    }
+
+                    goTo = LevelGenerator.sharedInstance.floorsSpawned[random].transform.position.x;
+                    isInUse = true;
+                }
+                else
+                {
+                    if (LevelGenerator.sharedInstance.zone == "Community")
+                    {
+                        LevelGenerator.sharedInstance.level = 2;
+
+                    }
+                    else
+                    {
+                        LevelGenerator.sharedInstance.level = 4;
+                    }
+
+                    LevelGenerator.sharedInstance.changeLevel = true;
+                    LevelGenerator.sharedInstance.useStairOrElevator();
+                }
+            }
         }
     }
 
@@ -38,9 +75,9 @@ public class Shortcut : MonoBehaviour
             isUsable = false;
         }
 
-        if (theObject.tag == "Player" && isActive && isUsable)   
+        if (theObject.tag == "Player" && isActive && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))   
         {
-            if (timer == 0f && Input.GetKeyDown(KeyCode.Mouse1))
+            if (timer == 0f && Input.GetKeyDown(KeyCode.Q))
             {
                 if (LevelGenerator.sharedInstance.zone == "Metropolis")
                 {

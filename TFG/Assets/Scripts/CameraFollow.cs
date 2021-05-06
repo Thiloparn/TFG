@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour
 
     void Update () 
     {
-        if (Mathf.Abs(Player.sharedInstance.transform.position.x - transform.position.x) >= 1 && !Player.sharedInstance.animator.GetBool("IsHitted"))
+        if (!Player.sharedInstance.animator.GetBool("IsHitted"))
         {
             float velocity;
             if (Player.sharedInstance.isUsingShortcut)
@@ -34,7 +34,7 @@ public class CameraFollow : MonoBehaviour
                 smoothTime = 0.5f;
             }
 
-            if (Mathf.Abs(velocity) < 10)
+            if (Mathf.Abs(velocity) < 0.01)
             {
                 following = false;
             }
@@ -42,7 +42,6 @@ public class CameraFollow : MonoBehaviour
             if (Vector2.Distance(Player.sharedInstance.idlePosition, Player.sharedInstance.transform.position) >= 128 || following)
             {
                 following = true;
-
                 if (velocity > 0)
                 {
                     follow(new Vector2(0.1f, 0.12f), target.position);
@@ -52,8 +51,9 @@ public class CameraFollow : MonoBehaviour
                     follow(new Vector2(0.9f, 0.12f), target.position);
                 }
             }
-            else
+            else if (Mathf.Abs(Player.sharedInstance.idlePosition.x - transform.position.x) >= 1)
             {
+                
                 follow(new Vector2(0.5f, 0.12f), Player.sharedInstance.idlePosition);
             }
         }

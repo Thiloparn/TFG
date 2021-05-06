@@ -10,13 +10,19 @@ public class Stairs : MonoBehaviour
     public BoxCollider2D boxCollider;
 
     public int goToLevel;
-    private bool isUsable = true;
+    public bool isUsable = true;
 
     private void OnTriggerEnter2D(Collider2D theObject)
     {
         if(theObject.tag == "Obstacle")
         {
             isUsable = false;
+        }
+
+        if (theObject.tag == "Player" && Input.GetKeyDown(KeyCode.Q) && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
+        {
+            LevelGenerator.sharedInstance.level = goToLevel;
+            LevelGenerator.sharedInstance.changeLevel = true;
         }
     }
 
@@ -32,7 +38,7 @@ public class Stairs : MonoBehaviour
             isUsable = false;
         }
 
-        if (theObject.tag == "Player" && Input.GetKeyDown(KeyCode.Mouse1) && isUsable && Player.sharedInstance.animator.GetBool("IsHitted"))
+        if (theObject.tag == "Player" && Input.GetKeyDown(KeyCode.Q) && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
         {
             LevelGenerator.sharedInstance.level = goToLevel;
             LevelGenerator.sharedInstance.changeLevel = true;

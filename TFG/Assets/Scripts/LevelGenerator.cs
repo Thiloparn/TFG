@@ -9,20 +9,20 @@ public class LevelGenerator : MonoBehaviour
 
     public List<Floor> floors = new List<Floor>();
     public List<Floor> floorsSpawned = new List<Floor>();
-    public List<Floor> nextFloorsSpawned = new List<Floor>();
+    private List<Floor> nextFloorsSpawned = new List<Floor>();
 
     public List<Background> backgrounds = new List<Background>();
     private List<Background> backgroundSpawned = new List<Background>();
     private List<Background> nextBackgroundSpawned = new List<Background>();
 
     public List<Obstacle> obstacles;
-    private List<Obstacle> obstaclesSpawned = new List<Obstacle>();
+    public List<Obstacle> obstaclesSpawned = new List<Obstacle>();
     private List<Obstacle> nextObstaclesSpawned = new List<Obstacle>();
     private int previousIndex = 10, prePreviousIndex = 10;
 
     public Stairs stairs;
     private List<Stairs> stairsSpawned = new List<Stairs>();
-    public List<Stairs> nextStairsSpawned = new List<Stairs>();
+    private List<Stairs> nextStairsSpawned = new List<Stairs>();
     private List<int> stairsPositionSpawned = new List<int>();
 
     public List<Shortcut> shortcuts = new List<Shortcut>();
@@ -81,16 +81,17 @@ public class LevelGenerator : MonoBehaviour
         {
             if (changeLevel)
             {
+                clearLevel();
                 zone = "Community";
                 useStairOrElevator();
             }
 
             if (playerPosition >= endOfLevel && nextFloorsSpawned.Count == 0)
-            {  
+            {
                 zone = "University";
 
                 spawnFloorsAndBackgrounds(floorsSpawned[floorsSpawned.Count - 1].exitPoint.transform.position);
-
+                
                 spawnObstacles();
 
                 spawnStairs();
@@ -167,7 +168,7 @@ public class LevelGenerator : MonoBehaviour
         nextObstaclesSpawned.Add(firstObstacleToSpawn);
 
 
-        while (nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position.x - nextObstaclesSpawned[nextObstaclesSpawned.Count - 1].exitPoint.position.x > 0)
+        while (nextFloorsSpawned[nextFloorsSpawned.Count - 1].transform.position.x - nextObstaclesSpawned[nextObstaclesSpawned.Count - 1].exitPoint.position.x > 0)
         {
             Vector3 lastExitPoint = nextObstaclesSpawned[nextObstaclesSpawned.Count - 1].exitPoint.position;
             Vector3 obstaclePosition = new Vector3(Random.Range(lastExitPoint.x + 128f, lastExitPoint.x + 160f), lastExitPoint.y, lastExitPoint.z);
@@ -234,6 +235,28 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    private void checkStairsPosition(Stairs stairs)
+    {
+        for (int i = 0; i < nextObstaclesSpawned.Count; i++)
+        {
+            Obstacle obstacleChecked = nextObstaclesSpawned[i];
+
+            bool b1 = stairs.transform.position.x >= obstacleChecked.transform.position.x;
+            bool b2 = stairs.transform.position.x <= obstacleChecked.transform.position.x;
+            bool b3 = stairs.transform.position.x <= obstacleChecked.exitPoint.transform.position.x;
+
+            bool b4 = stairs.exitPoint.transform.position.x >= obstacleChecked.transform.position.x;
+            bool b5 = stairs.exitPoint.transform.position.x <= obstacleChecked.exitPoint.transform.position.x;
+            bool b6 = stairs.exitPoint.transform.position.x >= obstacleChecked.exitPoint.transform.position.x;
+
+            if ((b1 && b3) || (b4 && b5) || (b2 && b5) || (b3 && b6))
+            {
+                stairs.transform.position = new Vector3(obstacleChecked.exitPoint.transform.position.x + 32f, stairs.transform.position.y, stairs.transform.position.z);
+                break;
+            }
+        }
+    }
+
 
     void spawnShortcut()
     {
@@ -281,32 +304,16 @@ public class LevelGenerator : MonoBehaviour
             Obstacle obstacleChecked = nextObstaclesSpawned[i];
 
             bool b1 = nextShorcutSpawned.transform.position.x >= obstacleChecked.transform.position.x;
-            bool b2 = nextShorcutSpawned.transform.position.x <= obstacleChecked.exitPoint.transform.position.x;
-            bool b3 = nextShorcutSpawned.exitPoint.transform.position.x >= obstacleChecked.transform.position.x;
-            bool b4 = nextShorcutSpawned.exitPoint.transform.position.x <= obstacleChecked.exitPoint.transform.position.x;
+            bool b2 = nextShorcutSpawned.transform.position.x <= obstacleChecked.transform.position.x;
+            bool b3 = nextShorcutSpawned.transform.position.x <= obstacleChecked.exitPoint.transform.position.x;
 
-            if ((b1 && b2) || (b3 && b4))
+            bool b4 = nextShorcutSpawned.exitPoint.transform.position.x >= obstacleChecked.transform.position.x;
+            bool b5 = nextShorcutSpawned.exitPoint.transform.position.x <= obstacleChecked.exitPoint.transform.position.x;
+            bool b6 = nextShorcutSpawned.exitPoint.transform.position.x >= obstacleChecked.exitPoint.transform.position.x;
+
+            if ((b1 && b3) || (b4 && b5) || (b2 && b5) || (b3 && b6))
             {
                 nextShorcutSpawned.transform.position = new Vector3(obstacleChecked.exitPoint.transform.position.x + 32f, nextShorcutSpawned.transform.position.y, nextShorcutSpawned.transform.position.z);
-                break;
-            }
-        }
-    }
-
-    private void checkStairsPosition(Stairs stairs)
-    {
-        for (int i = 0; i < nextObstaclesSpawned.Count; i++)
-        {
-            Obstacle obstacleChecked = nextObstaclesSpawned[i];
-
-            bool b1 = stairs.transform.position.x >= obstacleChecked.transform.position.x;
-            bool b2 = stairs.transform.position.x <= obstacleChecked.exitPoint.transform.position.x;
-            bool b3 = stairs.exitPoint.transform.position.x >= obstacleChecked.transform.position.x;
-            bool b4 = stairs.exitPoint.transform.position.x <= obstacleChecked.exitPoint.transform.position.x;
-
-            if ((b1 && b2) || (b3 && b4))
-            {
-                stairs.transform.position = new Vector3(obstacleChecked.exitPoint.transform.position.x + 32f, stairs.transform.position.y, stairs.transform.position.z);
                 break;
             }
         }
@@ -337,6 +344,7 @@ public class LevelGenerator : MonoBehaviour
         nextBackgroundSpawned.Clear();
         nextObstaclesSpawned.Clear();
         nextStairsSpawned.Clear();
+        stairsPositionSpawned.Clear();
         nextShorcutSpawned = null;
     }
 
