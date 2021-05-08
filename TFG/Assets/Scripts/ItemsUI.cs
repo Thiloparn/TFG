@@ -110,7 +110,7 @@ public class ItemsUI : MonoBehaviour
             {
                 drink.interactable = true;
                 drinkTime.enabled = false;
-                dt = 10;
+                dt = 25;
             }
 
             drinkTime.text = Mathf.FloorToInt(dt).ToString();
@@ -163,7 +163,7 @@ public class ItemsUI : MonoBehaviour
             {
                 notes.interactable = true;
                 notesTime.enabled = false;
-                nt = 10;
+                nt = 50;
             }
 
             notesTime.text = Mathf.FloorToInt(nt).ToString();
