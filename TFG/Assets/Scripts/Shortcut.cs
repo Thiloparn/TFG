@@ -14,15 +14,70 @@ public class Shortcut : MonoBehaviour
     public float timer;
     public string start, end, zone;
 
+    public bool isUsable = true;
     private bool isInUse = false, isActive = true;
     private float goTo;
 
+    private void OnTriggerEnter2D(Collider2D theObject)
+    {
+        if (theObject.tag == "Obstacle")
+        {
+            isUsable = false;
+        }
+
+        if (theObject.tag == "Player" && isActive && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
+        {
+            if (timer == 0f && Input.GetKeyDown(KeyCode.Q))
+            {
+                if (LevelGenerator.sharedInstance.zone == "Metropolis")
+                {
+                    int random;
+                    if (end == "Halfway")
+                    {
+                        random = Random.Range(20, 41);
+                    }
+                    else
+                    {
+                        random = Random.Range(40, 61);
+                    }
+
+                    goTo = LevelGenerator.sharedInstance.floorsSpawned[random].transform.position.x;
+                    isInUse = true;
+                }
+                else
+                {
+                    if (LevelGenerator.sharedInstance.zone == "Community")
+                    {
+                        LevelGenerator.sharedInstance.level = 2;
+
+                    }
+                    else
+                    {
+                        LevelGenerator.sharedInstance.level = 4;
+                    }
+
+                    LevelGenerator.sharedInstance.changeLevel = true;
+                    LevelGenerator.sharedInstance.useStairOrElevator();
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D theObject)
+    {
+        isUsable = true;
+    }
 
     void OnTriggerStay2D(Collider2D theObject)
     {
-        if (theObject.tag == "Player" && isActive)   
+        if (theObject.tag == "Obstacle")
         {
-            if (timer == 0f && Input.GetKeyDown(KeyCode.Mouse1))
+            isUsable = false;
+        }
+
+        if (theObject.tag == "Player" && isActive && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))   
+        {
+            if (timer == 0f && Input.GetKeyDown(KeyCode.Q))
             {
                 if (LevelGenerator.sharedInstance.zone == "Metropolis")
                 {
@@ -62,7 +117,7 @@ public class Shortcut : MonoBehaviour
     private void Awake()
     {
         timer = Random.Range(5, maxtime + 1);
-        meshRenderer.sortingLayerName = "UI";
+        meshRenderer.sortingLayerName = "Shortcuts text";
         rigidBody = GetComponent<Rigidbody2D>();
     }
 

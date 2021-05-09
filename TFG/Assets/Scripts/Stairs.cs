@@ -7,13 +7,38 @@ public class Stairs : MonoBehaviour
     public Transform exitPoint;
     public MeshRenderer meshRenderer;
     public TextMesh text;
+    public BoxCollider2D boxCollider;
 
     public int goToLevel;
+    public bool isUsable = true;
 
+    private void OnTriggerEnter2D(Collider2D theObject)
+    {
+        if(theObject.tag == "Obstacle")
+        {
+            isUsable = false;
+        }
+
+        if (theObject.tag == "Player" && Input.GetKeyDown(KeyCode.Q) && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
+        {
+            LevelGenerator.sharedInstance.level = goToLevel;
+            LevelGenerator.sharedInstance.changeLevel = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D theObject)
+    {
+        isUsable = true;
+    }
 
     void OnTriggerStay2D(Collider2D theObject)
     {
-        if (theObject.tag == "Player" && Input.GetKeyDown(KeyCode.Mouse1))
+        if(theObject.tag == "Obstacle")
+        {
+            isUsable = false;
+        }
+
+        if (theObject.tag == "Player" && Input.GetKeyDown(KeyCode.Q) && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
         {
             LevelGenerator.sharedInstance.level = goToLevel;
             LevelGenerator.sharedInstance.changeLevel = true;
@@ -23,7 +48,7 @@ public class Stairs : MonoBehaviour
 
     private void Awake()
     {
-        meshRenderer.sortingLayerName = "UI";
+        meshRenderer.sortingLayerName = "Shortcuts text";
 
         goToLevel = Mathf.FloorToInt(Random.Range(0, 5));
         while(goToLevel == LevelGenerator.sharedInstance.level)

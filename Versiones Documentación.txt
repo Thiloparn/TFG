@@ -34,3 +34,7 @@ v2.2:
 - 4.4: Nuevo apartado.
 - 4.5: Inclusión de nuevas herramientas.
 - 4.6: Recalculo de costes. 
+
+v3.0:
+- Versión inicial de la tercera iteración.
+- Sustitución del nombre del rol "técnico de animaciones" por "animador".
