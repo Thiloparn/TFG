@@ -43,3 +43,9 @@ v3.2
 v3.3
 -4.2: Cambios de zonas de aparición de algunos obstáculos y redefinición de los Arboles.
 - 4.3 y 5.4: Cambios en los tiempos de espera y de uso de los atajos.
+
+v3.4
+- 2.1: Cambio de nombre del tornillo al destornillador.
+- 3.3.3.1: Los subniveles de velocidad aumentan cada 3 clicks en lugar de 2.
+- 3.3.4: Los objetos ahora poseen un tiempo mínimo entre cada uso y cambio en la forma en la que abrir el inventario repercute sobre el movimiento del
+jugador. Cambio de nombre del tornillo al destornillador, y ahora recupera 3 niveles de integridad en lugar de 1.
