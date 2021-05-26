@@ -19,7 +19,7 @@ public class Stairs : MonoBehaviour
             isUsable = false;
         }
 
-        if (theObject.tag == "Player" && Input.GetKeyDown(KeyCode.Q) && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
+        if (theObject.tag == "Player" && Player.sharedInstance.playerInput.actions.FindAction("Use").triggered && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
         {
             LevelGenerator.sharedInstance.level = goToLevel;
             LevelGenerator.sharedInstance.changeLevel = true;
@@ -38,7 +38,7 @@ public class Stairs : MonoBehaviour
             isUsable = false;
         }
 
-        if (theObject.tag == "Player" && Input.GetKeyDown(KeyCode.Q) && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
+        if (theObject.tag == "Player" && Player.sharedInstance.playerInput.actions.FindAction("Use").triggered && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
         {
             LevelGenerator.sharedInstance.level = goToLevel;
             LevelGenerator.sharedInstance.changeLevel = true;

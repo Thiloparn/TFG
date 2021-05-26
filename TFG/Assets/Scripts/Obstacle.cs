@@ -7,7 +7,6 @@ public class Obstacle : MonoBehaviour
 
     private Rigidbody2D rigidBody;
     public SpriteRenderer spriteRenderer;
-    public BoxCollider2D boxCollider;
     public Transform exitPoint;
 
     public bool isStatic, isBreakable, isBroken;
@@ -59,8 +58,11 @@ public class Obstacle : MonoBehaviour
     public void Initialize(){
         Random.InitState((int) System.DateTime.Now.Ticks);
         float random = Random.Range(0, 2);
-        if(random==0){
+        if(random==0 && !isStatic){
             this.speed = -this.speed;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1;
+            transform.localScale = scale;
         }
     }
 }
