@@ -27,7 +27,7 @@ public class Shortcut : MonoBehaviour
 
         if (theObject.tag == "Player" && isActive && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))
         {
-            if (timer == 0f && Input.GetKeyDown(KeyCode.Q))
+            if (timer == 0f && Player.sharedInstance.playerInput.actions.FindAction("Use").triggered)
             {
                 if (LevelGenerator.sharedInstance.zone == "Metropolis")
                 {
@@ -77,7 +77,7 @@ public class Shortcut : MonoBehaviour
 
         if (theObject.tag == "Player" && isActive && isUsable && !Player.sharedInstance.animator.GetBool("IsHitted"))   
         {
-            if (timer == 0f && Input.GetKeyDown(KeyCode.Q))
+            if (timer == 0f && Player.sharedInstance.playerInput.actions.FindAction("Use").triggered)
             {
                 if (LevelGenerator.sharedInstance.zone == "Metropolis")
                 {
@@ -138,7 +138,7 @@ public class Shortcut : MonoBehaviour
             text.text = Mathf.FloorToInt(timer).ToString();
         }
 
-        if (isInUse)
+        if (isInUse && !PauseMenu.sharedInstance.isActive)
         {
             Player.sharedInstance.isUsingShortcut = true;
             meshRenderer.enabled = false;

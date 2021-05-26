@@ -10,7 +10,7 @@ public class Finish : MonoBehaviour
     {
         if (theObject.tag == "Player")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            SceneManager.LoadScene("GameOver");
         }
     }
 }

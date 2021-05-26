@@ -126,7 +126,7 @@ public class LevelGenerator : MonoBehaviour
         {
             floor = floors[1];
             background = backgrounds[1];
-            length = 60;
+            length = 40;
         } 
         else
         {

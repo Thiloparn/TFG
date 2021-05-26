@@ -15,6 +15,7 @@ public class ItemsUI : MonoBehaviour
 
     public bool isActive;
     private float dt, st, nt;
+    public int notesUses;
 
     void Awake()
     {
@@ -48,7 +49,7 @@ public class ItemsUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Player.sharedInstance.playerInput.actions.FindAction("Inventory").triggered && !PauseMenu.sharedInstance.isActive)
         {
             image.enabled = !isActive;
 
@@ -146,7 +147,7 @@ public class ItemsUI : MonoBehaviour
 
     public void useNotes()
     {
-
+        notesUses ++;
         notes.interactable = false;
         notesTime.enabled = true;
     }
