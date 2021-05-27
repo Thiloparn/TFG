@@ -61,6 +61,12 @@ TagManager:
   - name: Player
     uniqueID: 4079987429
     locked: 0
+  - name: Bus
+    uniqueID: 275832797
+    locked: 0
+  - name: Bus text
+    uniqueID: 1986468643
+    locked: 0
   - name: UI
     uniqueID: 661167527
     locked: 0
