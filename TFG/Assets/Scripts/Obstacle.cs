@@ -46,12 +46,12 @@ public class Obstacle : MonoBehaviour
             this.rigidBody.velocity = new Vector2(this.speed, this.rigidBody.velocity.y);
         }
 
-        if (isBroken)
+        /*if (isBroken)
         {
             LevelGenerator.sharedInstance.obstaclesSpawned.Remove(this);
             spriteRenderer.enabled = false;
             Destroy(this);
-        }
+        }*/
     }
 
 
@@ -64,5 +64,11 @@ public class Obstacle : MonoBehaviour
             scale.x *= -1;
             transform.localScale = scale;
         }
+    }
+
+    public void brake()
+    {
+        LevelGenerator.sharedInstance.obstaclesSpawned.Remove(this);
+        Destroy(this.gameObject);
     }
 }

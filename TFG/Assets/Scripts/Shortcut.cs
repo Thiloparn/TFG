@@ -31,17 +31,7 @@ public class Shortcut : MonoBehaviour
             {
                 if (LevelGenerator.sharedInstance.zone == "Metropolis")
                 {
-                    int random;
-                    if (end == "Halfway")
-                    {
-                        random = Random.Range(20, 41);
-                    }
-                    else
-                    {
-                        random = Random.Range(40, 61);
-                    }
-
-                    goTo = LevelGenerator.sharedInstance.floorsSpawned[random].transform.position.x;
+                    goTo = LevelGenerator.sharedInstance.floorsSpawned[Random.Range(35, 40)].transform.position.x;
                     isInUse = true;
                 }
                 else
@@ -81,17 +71,7 @@ public class Shortcut : MonoBehaviour
             {
                 if (LevelGenerator.sharedInstance.zone == "Metropolis")
                 {
-                    int random;
-                    if (end == "Halfway")
-                    {
-                        random = Random.Range(20, 41);
-                    }
-                    else
-                    {
-                        random = Random.Range(40, 61);
-                    }
-
-                    goTo = LevelGenerator.sharedInstance.floorsSpawned[random].transform.position.x;
+                    goTo = LevelGenerator.sharedInstance.floorsSpawned[Random.Range(35, 40)].transform.position.x;
                     isInUse = true;
                 }
                 else

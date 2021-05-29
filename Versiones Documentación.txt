@@ -43,4 +43,4 @@ v4.0:
 - Versión inicial de la cuarta iteración.
 
 v4.1:
-- Reorganización de las actividades.
+- Reorganización de las actividades de la cuarta iteración.
