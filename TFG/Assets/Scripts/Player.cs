@@ -139,13 +139,20 @@ public class Player : MonoBehaviour
     {
         if (isInvincible)
         {
+            InvokeRepeating("flash", 0f, 0.1f);
             timerInvincible += Time.deltaTime;
             if (timerInvincible > 2f)
             {
+                CancelInvoke();
                 isInvincible = false;
                 timerInvincible = 0f;
             }
         }
+    }
+
+    void flash()
+    {
+        spriteRenderer.enabled = !spriteRenderer.enabled;
     }
 
 

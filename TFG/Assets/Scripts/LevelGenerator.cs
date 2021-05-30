@@ -29,6 +29,10 @@ public class LevelGenerator : MonoBehaviour
     private Shortcut shorcutSpawned;
     private Shortcut nextShorcutSpawned;
 
+    public Wall wall;
+    public List<Wall> wallSpawned = new List<Wall>();
+    public List<Wall> nextWallSpawned = new List<Wall>();
+
     public Finish finish;
 
     public string zone;
@@ -44,6 +48,8 @@ public class LevelGenerator : MonoBehaviour
         level = 4;
 
         spawnFloorsAndBackgrounds(this.transform.position);
+
+        spawnWalls();
 
         spawnObstacles();
 
@@ -91,6 +97,10 @@ public class LevelGenerator : MonoBehaviour
                 zone = "University";
 
                 spawnFloorsAndBackgrounds(floorsSpawned[floorsSpawned.Count - 1].exitPoint.transform.position);
+
+                spawnWalls();
+
+                destroyOneWall(0);
                 
                 spawnObstacles();
 
@@ -154,6 +164,18 @@ public class LevelGenerator : MonoBehaviour
 
             i++;
         }
+    }
+
+    public void spawnWalls()
+    {
+        float startX = nextFloorsSpawned[0].transform.position.x - (wall.exitPoint.transform.position.x - wall.transform.position.x);
+        Vector3 startPosition = new Vector3(startX, nextFloorsSpawned[0].transform.position.y, nextFloorsSpawned[0].transform.position.z);
+        Wall startWall = (Wall)Instantiate(wall, startPosition, Quaternion.identity);
+        nextWallSpawned.Add(startWall);
+
+        Wall endWall = (Wall)Instantiate(wall, nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position, Quaternion.identity);
+        nextWallSpawned.Add(endWall);
+
     }
 
 
@@ -260,7 +282,7 @@ public class LevelGenerator : MonoBehaviour
 
     void spawnShortcut()
     {
-        if (/*Random.Range(0, 2) == 0*/true)
+        if (Random.Range(0, 2) == 0)
         {
             if (zone == "Metropolis")
             {
@@ -324,6 +346,7 @@ public class LevelGenerator : MonoBehaviour
         {
             destroyFloors(floorsSpawned);
             destroyBackgrounds(backgroundSpawned);
+            destroyWalls(wallSpawned);
             destroyObstacles(obstaclesSpawned);
             destroyStairs(stairsSpawned);
             if(shorcutSpawned != null)
@@ -335,12 +358,14 @@ public class LevelGenerator : MonoBehaviour
 
         floorsSpawned.AddRange(nextFloorsSpawned);
         backgroundSpawned.AddRange(nextBackgroundSpawned);
+        wallSpawned.AddRange(nextWallSpawned);
         obstaclesSpawned.AddRange(nextObstaclesSpawned);
         stairsSpawned.AddRange(nextStairsSpawned);
         shorcutSpawned = nextShorcutSpawned;
 
         nextFloorsSpawned.Clear();
         nextBackgroundSpawned.Clear();
+        nextWallSpawned.Clear();
         nextObstaclesSpawned.Clear();
         nextStairsSpawned.Clear();
         stairsPositionSpawned.Clear();
@@ -358,6 +383,16 @@ public class LevelGenerator : MonoBehaviour
     }
 
     private void destroyBackgrounds(List<Background> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            Destroy(list[i].gameObject);
+        }
+
+        list.Clear();
+    }
+
+    private void destroyWalls(List<Wall> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -391,6 +426,8 @@ public class LevelGenerator : MonoBehaviour
     {
         spawnFloorsAndBackgrounds(floorsSpawned[floorsSpawned.Count - 1].exitPoint.transform.position);
 
+        spawnWalls();
+
         spawnObstacles();
 
         spawnStairs();
@@ -399,7 +436,12 @@ public class LevelGenerator : MonoBehaviour
 
         if (zone == "University" && level == 4)
         {
+            destroyOneWall(1);
             finish = (Finish)Instantiate(finish, nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position, Quaternion.identity);
+        } 
+        else if (zone == "Community" && level == 0)
+        {
+            destroyOneWall(1);
         }
 
         int sartingFloor = (level == 0 || level == 4) ? 0 : nextFloorsSpawned.Count - 1;
@@ -411,6 +453,13 @@ public class LevelGenerator : MonoBehaviour
         clearLevel();
 
         changeLevel = false;
+    }
+
+    public void destroyOneWall(int i)
+    {
+        Wall wall = nextWallSpawned[i];
+        nextWallSpawned.Remove(wall);
+        Destroy(wall.gameObject);
     }
 
 }

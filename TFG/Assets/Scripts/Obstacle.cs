@@ -46,12 +46,18 @@ public class Obstacle : MonoBehaviour
             this.rigidBody.velocity = new Vector2(this.speed, this.rigidBody.velocity.y);
         }
 
-        /*if (isBroken)
+        bool leftLimit = LevelGenerator.sharedInstance.floorsSpawned[0].transform.position.x - exitPoint.position.x > 0;
+        bool rightLimit = exitPoint.position.x - LevelGenerator.sharedInstance.floorsSpawned[LevelGenerator.sharedInstance.floorsSpawned.Count - 1].exitPoint.position.x > 0;
+
+        if(leftLimit || rightLimit)
         {
-            LevelGenerator.sharedInstance.obstaclesSpawned.Remove(this);
-            spriteRenderer.enabled = false;
-            Destroy(this);
-        }*/
+            float positionX = leftLimit ? LevelGenerator.sharedInstance.floorsSpawned[0].transform.position.x + 1 : LevelGenerator.sharedInstance.floorsSpawned[LevelGenerator.sharedInstance.floorsSpawned.Count - 1].exitPoint.position.x - 1;
+            transform.position = new Vector3(positionX, transform.position.y, transform.position.z);
+            this.speed = -this.speed;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1;
+            transform.localScale = scale;
+        }
     }
 
 
