@@ -29,6 +29,10 @@ public class LevelGenerator : MonoBehaviour
     private Shortcut shorcutSpawned;
     private Shortcut nextShorcutSpawned;
 
+    public Wall wall;
+    public List<Wall> wallSpawned = new List<Wall>();
+    public List<Wall> nextWallSpawned = new List<Wall>();
+
     public Finish finish;
 
     public string zone;
@@ -44,6 +48,8 @@ public class LevelGenerator : MonoBehaviour
         level = 4;
 
         spawnFloorsAndBackgrounds(this.transform.position);
+
+        spawnWalls();
 
         spawnObstacles();
 
@@ -91,6 +97,10 @@ public class LevelGenerator : MonoBehaviour
                 zone = "University";
 
                 spawnFloorsAndBackgrounds(floorsSpawned[floorsSpawned.Count - 1].exitPoint.transform.position);
+
+                spawnWalls();
+
+                destroyOneWall(0);
                 
                 spawnObstacles();
 
@@ -156,6 +166,18 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    public void spawnWalls()
+    {
+        float startX = nextFloorsSpawned[0].transform.position.x - (wall.exitPoint.transform.position.x - wall.transform.position.x);
+        Vector3 startPosition = new Vector3(startX, nextFloorsSpawned[0].transform.position.y, nextFloorsSpawned[0].transform.position.z);
+        Wall startWall = (Wall)Instantiate(wall, startPosition, Quaternion.identity);
+        nextWallSpawned.Add(startWall);
+
+        Wall endWall = (Wall)Instantiate(wall, nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position, Quaternion.identity);
+        nextWallSpawned.Add(endWall);
+
+    }
+
 
     void spawnObstacles()
     {
@@ -171,7 +193,7 @@ public class LevelGenerator : MonoBehaviour
         while (nextFloorsSpawned[nextFloorsSpawned.Count - 1].transform.position.x - nextObstaclesSpawned[nextObstaclesSpawned.Count - 1].exitPoint.position.x > 0)
         {
             Vector3 lastExitPoint = nextObstaclesSpawned[nextObstaclesSpawned.Count - 1].exitPoint.position;
-            Vector3 obstaclePosition = new Vector3(Random.Range(lastExitPoint.x + 128f, lastExitPoint.x + 160f), lastExitPoint.y, lastExitPoint.z);
+            Vector3 obstaclePosition = new Vector3(Random.Range(lastExitPoint.x + 224f, lastExitPoint.x + 320f), lastExitPoint.y, lastExitPoint.z);
             Obstacle obstacleToSpawn = (Obstacle)Instantiate(obstaclesOfZone[randomIndex(obstaclesOfZone)], obstaclePosition, Quaternion.identity);
             obstacleToSpawn.Initialize();
             nextObstaclesSpawned.Add(obstacleToSpawn);
@@ -249,7 +271,7 @@ public class LevelGenerator : MonoBehaviour
             bool b5 = stairs.exitPoint.transform.position.x <= obstacleChecked.exitPoint.transform.position.x;
             bool b6 = stairs.exitPoint.transform.position.x >= obstacleChecked.exitPoint.transform.position.x;
 
-            if ((b1 && b3) || (b4 && b5) || (b2 && b5) || (b3 && b6))
+            if ((b1 && b3) || (b4 && b5) || (b2 && b4) || (b3 && b6))
             {
                 stairs.transform.position = new Vector3(obstacleChecked.exitPoint.transform.position.x + 32f, stairs.transform.position.y, stairs.transform.position.z);
                 break;
@@ -282,12 +304,11 @@ public class LevelGenerator : MonoBehaviour
             {
                 if((zone == "Community" && level == 4) || (zone == "University" && level == 2)) 
                 {
-                    int randomIndex = Random.Range(0, nextFloorsSpawned.Count);
+                    int randomIndex = Random.Range(1, nextFloorsSpawned.Count);
                     while (stairsPositionSpawned.Contains(randomIndex))
                     {
-                        randomIndex = Random.Range(0, nextFloorsSpawned.Count);
+                        randomIndex = Random.Range(1, nextFloorsSpawned.Count);
                     }
-                    
                     Vector3 shortcutPosition = new Vector3(nextFloorsSpawned[randomIndex].transform.position.x, -96f, nextFloorsSpawned[randomIndex].transform.position.z);
                     nextShorcutSpawned = (Shortcut)Instantiate(shortcuts.Find(x => x.zone == zone), shortcutPosition, Quaternion.identity);
                     checkShortcutPosition();
@@ -311,7 +332,7 @@ public class LevelGenerator : MonoBehaviour
             bool b5 = nextShorcutSpawned.exitPoint.transform.position.x <= obstacleChecked.exitPoint.transform.position.x;
             bool b6 = nextShorcutSpawned.exitPoint.transform.position.x >= obstacleChecked.exitPoint.transform.position.x;
 
-            if ((b1 && b3) || (b4 && b5) || (b2 && b5) || (b3 && b6))
+            if ((b1 && b3) || (b4 && b5) || (b2 && b4) || (b3 && b6))
             {
                 nextShorcutSpawned.transform.position = new Vector3(obstacleChecked.exitPoint.transform.position.x + 32f, nextShorcutSpawned.transform.position.y, nextShorcutSpawned.transform.position.z);
                 break;
@@ -325,6 +346,7 @@ public class LevelGenerator : MonoBehaviour
         {
             destroyFloors(floorsSpawned);
             destroyBackgrounds(backgroundSpawned);
+            destroyWalls(wallSpawned);
             destroyObstacles(obstaclesSpawned);
             destroyStairs(stairsSpawned);
             if(shorcutSpawned != null)
@@ -336,12 +358,14 @@ public class LevelGenerator : MonoBehaviour
 
         floorsSpawned.AddRange(nextFloorsSpawned);
         backgroundSpawned.AddRange(nextBackgroundSpawned);
+        wallSpawned.AddRange(nextWallSpawned);
         obstaclesSpawned.AddRange(nextObstaclesSpawned);
         stairsSpawned.AddRange(nextStairsSpawned);
         shorcutSpawned = nextShorcutSpawned;
 
         nextFloorsSpawned.Clear();
         nextBackgroundSpawned.Clear();
+        nextWallSpawned.Clear();
         nextObstaclesSpawned.Clear();
         nextStairsSpawned.Clear();
         stairsPositionSpawned.Clear();
@@ -359,6 +383,16 @@ public class LevelGenerator : MonoBehaviour
     }
 
     private void destroyBackgrounds(List<Background> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            Destroy(list[i].gameObject);
+        }
+
+        list.Clear();
+    }
+
+    private void destroyWalls(List<Wall> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -392,6 +426,8 @@ public class LevelGenerator : MonoBehaviour
     {
         spawnFloorsAndBackgrounds(floorsSpawned[floorsSpawned.Count - 1].exitPoint.transform.position);
 
+        spawnWalls();
+
         spawnObstacles();
 
         spawnStairs();
@@ -400,7 +436,12 @@ public class LevelGenerator : MonoBehaviour
 
         if (zone == "University" && level == 4)
         {
+            destroyOneWall(1);
             finish = (Finish)Instantiate(finish, nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position, Quaternion.identity);
+        } 
+        else if (zone == "Community" && level == 0)
+        {
+            destroyOneWall(1);
         }
 
         int sartingFloor = (level == 0 || level == 4) ? 0 : nextFloorsSpawned.Count - 1;
@@ -412,6 +453,13 @@ public class LevelGenerator : MonoBehaviour
         clearLevel();
 
         changeLevel = false;
+    }
+
+    public void destroyOneWall(int i)
+    {
+        Wall wall = nextWallSpawned[i];
+        nextWallSpawned.Remove(wall);
+        Destroy(wall.gameObject);
     }
 
 }

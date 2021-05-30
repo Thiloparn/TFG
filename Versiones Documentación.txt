@@ -38,3 +38,9 @@ v2.2:
 v3.0:
 - Versión inicial de la tercera iteración.
 - Sustitución del nombre del rol "técnico de animaciones" por "animador".
+
+v4.0:
+- Versión inicial de la cuarta iteración.
+
+v4.1:
+- Reorganización de las actividades de la cuarta iteración.

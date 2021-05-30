@@ -29,7 +29,8 @@ public class LaptopUI : MonoBehaviour
             foreach(Collider2D obstacleCollider in hitObstacles)
             {
                 Obstacle obstacle = obstacleCollider.GetComponent<Obstacle>();
-                obstacle.isBroken = obstacle.isBreakable ? true : false;
+                //obstacle.isBroken = obstacle.isBreakable ? true : false;
+                obstacle.brake();
             }
         }
     }
