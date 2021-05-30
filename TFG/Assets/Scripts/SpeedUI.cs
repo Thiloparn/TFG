@@ -22,10 +22,10 @@ public class SpeedUI : MonoBehaviour
         slider3.value = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !player.isUsingShortcut && !player.animator.GetBool("IsJumping") && !player.animator.GetBool("IsSliding") && !player.animator.GetBool("IsHitted") && !ItemsUI.sharedInstance.isActive)
+        if (Player.sharedInstance.playerInput.actions.FindAction("Acelerate").triggered && !player.isUsingShortcut && !player.animator.GetBool("IsJumping") && !player.animator.GetBool("IsSliding") && !player.animator.GetBool("IsHitted") && !ItemsUI.sharedInstance.isActive 
+            && !PauseMenu.sharedInstance.isActive)
         {
             timerClicks = 0;
             clicks += 1;

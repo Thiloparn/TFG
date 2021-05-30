@@ -8,9 +8,18 @@ public class Menu : MonoBehaviour
 
     public void start()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("Game");
     }
 
+    public void score()
+    {
+        SceneManager.LoadScene("ScoreMenu");
+    }
+
+    public void controls()
+    {
+        SceneManager.LoadScene("Controls");
+    }
 
     public void exit()
     {
