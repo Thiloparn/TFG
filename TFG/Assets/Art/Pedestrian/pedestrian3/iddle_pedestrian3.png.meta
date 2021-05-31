@@ -1,28 +1,31 @@
 fileFormatVersion: 2
-guid: 29a2f359ad667284dae0686a471caa72
+guid: d55c216e53acac14f8584af20ad30363
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2260995478452537187
-    second: playerjump_0
+      213: -8490925139167313158
+    second: iddle_pedestrian3_0
   - first:
-      213: -1735873171813372789
-    second: playerjump_1
+      213: 6983130162156236460
+    second: iddle_pedestrian3_1
   - first:
-      213: 762767772398979582
-    second: playerjump_2
+      213: -3361065463491784880
+    second: iddle_pedestrian3_2
   - first:
-      213: 2784383635591355077
-    second: playerjump_3
+      213: 5857113551793040586
+    second: iddle_pedestrian3_3
   - first:
-      213: 4354163366000593399
-    second: playerjump_4
+      213: 7598174071192881058
+    second: iddle_pedestrian3_4
   - first:
-      213: -273501254872655591
-    second: playerjump_5
+      213: -3333553881090561509
+    second: iddle_pedestrian3_5
   - first:
-      213: 5708273008236590314
-    second: playerjump_6
+      213: -6353151103126981311
+    second: iddle_pedestrian3_6
+  - first:
+      213: -9207258225038851245
+    second: iddle_pedestrian3_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -112,148 +115,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: playerjump_0
+      name: iddle_pedestrian3_0
       rect:
         serializedVersion: 2
-        x: 32
-        y: 11
-        width: 19
-        height: 54
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 12
+        y: 8
+        width: 116
+        height: 228
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3678deb886ba06f10800000000000000
-      internalID: 2260995478452537187
+      spriteID: af28f71a29c2a2a80800000000000000
+      internalID: -8490925139167313158
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerjump_1
+      name: iddle_pedestrian3_1
       rect:
         serializedVersion: 2
-        x: 107
-        y: 16
-        width: 22
-        height: 53
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 152
+        y: 8
+        width: 132
+        height: 224
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8ceeea1c80f8e7e0800000000000000
-      internalID: -1735873171813372789
+      spriteID: cae63af52ef09e060800000000000000
+      internalID: 6983130162156236460
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerjump_2
+      name: iddle_pedestrian3_2
       rect:
         serializedVersion: 2
-        x: 185
-        y: 13
-        width: 25
-        height: 62
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 332
+        y: 8
+        width: 80
+        height: 232
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef905f76f35e59a00800000000000000
-      internalID: 762767772398979582
+      spriteID: 05f0db5c4c81b51d0800000000000000
+      internalID: -3361065463491784880
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerjump_3
+      name: iddle_pedestrian3_3
       rect:
         serializedVersion: 2
-        x: 260
-        y: 16
-        width: 31
-        height: 58
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 476
+        y: 8
+        width: 72
+        height: 236
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5ca55dd0a2e14a620800000000000000
-      internalID: 2784383635591355077
+      spriteID: acc20c73eb5a84150800000000000000
+      internalID: 5857113551793040586
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerjump_4
+      name: iddle_pedestrian3_4
       rect:
         serializedVersion: 2
-        x: 339
-        y: 16
-        width: 31
-        height: 58
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 608
+        y: 8
+        width: 112
+        height: 228
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7f90c7413881d6c30800000000000000
-      internalID: 4354163366000593399
+      spriteID: 2a709079f03227960800000000000000
+      internalID: 7598174071192881058
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerjump_5
+      name: iddle_pedestrian3_5
       rect:
         serializedVersion: 2
-        x: 410
-        y: 11
-        width: 48
-        height: 58
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 752
+        y: 8
+        width: 88
+        height: 224
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91911b9ce04543cf0800000000000000
-      internalID: -273501254872655591
+      spriteID: b1ae8f53866dcb1d0800000000000000
+      internalID: -3333553881090561509
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: playerjump_6
+      name: iddle_pedestrian3_6
       rect:
         serializedVersion: 2
-        x: 507
-        y: 11
-        width: 24
-        height: 53
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 924
+        y: 8
+        width: 56
+        height: 232
+      alignment: 6
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae474e8ae0cd73f40800000000000000
-      internalID: 5708273008236590314
+      spriteID: 1453cbd6bb215d7a0800000000000000
+      internalID: -6353151103126981311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: iddle_pedestrian3_7
+      rect:
+        serializedVersion: 2
+        x: 1060
+        y: 8
+        width: 80
+        height: 236
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 353044d2d6f393080800000000000000
+      internalID: -9207258225038851245
       vertices: []
       indices: 
       edges: []
