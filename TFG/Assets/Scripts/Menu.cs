@@ -11,6 +11,11 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
+    public void startDemo()
+    {
+        SceneManager.LoadScene("GameDemo");
+    }
+
     public void score()
     {
         SceneManager.LoadScene("ScoreMenu");
