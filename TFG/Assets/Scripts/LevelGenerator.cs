@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -44,20 +45,43 @@ public class LevelGenerator : MonoBehaviour
     {
         sharedInstance = this;
         Random.InitState((int) System.DateTime.Now.Ticks);
-        zone = "Community";
-        level = 4;
 
-        spawnFloorsAndBackgrounds(this.transform.position);
+        if(SceneManager.GetActiveScene().name == "Game")
+        {
+            zone = "Community";
+            level = 4;
 
-        spawnWalls();
+            spawnFloorsAndBackgrounds(this.transform.position);
 
-        spawnObstacles();
+            spawnWalls();
 
-        spawnStairs();
+            spawnObstacles();
+
+            spawnStairs();
+
+            spawnShortcut();
+
+            clearLevel();
+        } 
+        else
+        {
+            zone = "Metropolis";
+
+            spawnFloorsAndBackgrounds(this.transform.position);
+
+            spawnWalls();
+
+            destroyOneWall(1);
+
+            spawnObstacles();
+
+            spawnShortcut();
+
+            finish = (Finish)Instantiate(finish, nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position, Quaternion.identity);
+
+            clearLevel();
+        }
         
-        spawnShortcut();
-        
-        clearLevel();
     }
 
     private void Update()
@@ -92,7 +116,7 @@ public class LevelGenerator : MonoBehaviour
                 useStairOrElevator();
             }
 
-            if (playerPosition >= endOfLevel && nextFloorsSpawned.Count == 0)
+            if (playerPosition >= endOfLevel && nextFloorsSpawned.Count == 0 && SceneManager.GetActiveScene().name == "Game")
             {
                 zone = "University";
 
@@ -112,7 +136,7 @@ public class LevelGenerator : MonoBehaviour
 
         if (nextFloorsSpawned.Count > 0)
         {
-            if (playerPosition >= nextFloorsSpawned[2].transform.position.x)
+            if (playerPosition >= nextFloorsSpawned[2].transform.position.x && SceneManager.GetActiveScene().name == "Game")
             {
                 clearLevel();
             }
