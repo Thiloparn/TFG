@@ -13,6 +13,8 @@ public class Obstacle : MonoBehaviour
     public float speed;
     public List<string> zone = new List<string>();
 
+    public List<Floor> floors = new List<Floor>();
+
 
     void OnTriggerEnter2D(Collider2D theObject)
     {
@@ -25,6 +27,14 @@ public class Obstacle : MonoBehaviour
             Player.sharedInstance.isInvincible = true;
             SpeedUI.sharedInstance.obstacleHitted();
         }
+        if (theObject.tag == "Wall")
+        {
+            this.speed = -this.speed;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1;
+            transform.localScale = scale;
+        }
+
     }
 
 
@@ -37,6 +47,16 @@ public class Obstacle : MonoBehaviour
     void Start()
     {
         rigidBody.velocity = new Vector2(0, 0);
+
+        floors.Clear();
+        if (exitPoint.position.x < LevelGenerator.sharedInstance.floorsSpawned[LevelGenerator.sharedInstance.floorsSpawned.Count - 1].exitPoint.position.x)
+        {
+            floors.AddRange(LevelGenerator.sharedInstance.floorsSpawned);
+        }
+        else
+        {
+            floors.AddRange(LevelGenerator.sharedInstance.nextFloorsSpawned);
+        }
     }
 
 
@@ -46,17 +66,20 @@ public class Obstacle : MonoBehaviour
             this.rigidBody.velocity = new Vector2(this.speed, this.rigidBody.velocity.y);
         }
 
-        bool leftLimit = LevelGenerator.sharedInstance.floorsSpawned[0].transform.position.x - exitPoint.position.x > 0;
-        bool rightLimit = exitPoint.position.x - LevelGenerator.sharedInstance.floorsSpawned[LevelGenerator.sharedInstance.floorsSpawned.Count - 1].exitPoint.position.x > 0;
-
-        if(leftLimit || rightLimit)
+        if (floors[0] != null)
         {
-            float positionX = leftLimit ? LevelGenerator.sharedInstance.floorsSpawned[0].transform.position.x + 1 : LevelGenerator.sharedInstance.floorsSpawned[LevelGenerator.sharedInstance.floorsSpawned.Count - 1].exitPoint.position.x - 1;
-            transform.position = new Vector3(positionX, transform.position.y, transform.position.z);
-            this.speed = -this.speed;
-            Vector3 scale = transform.localScale;
-            scale.x *= -1;
-            transform.localScale = scale;
+            bool leftLimit = floors[0].transform.position.x - exitPoint.position.x > 0;
+            bool rightLimit = exitPoint.position.x - floors[floors.Count - 1].exitPoint.position.x > 0;
+
+            if (leftLimit || rightLimit)
+            {
+                float positionX = leftLimit ? floors[0].transform.position.x + 1 : floors[floors.Count - 1].exitPoint.position.x - 1;
+                transform.position = new Vector3(positionX, transform.position.y, transform.position.z);
+                this.speed = -this.speed;
+                Vector3 scale = transform.localScale;
+                scale.x *= -1;
+                transform.localScale = scale;
+            }
         }
     }
 

@@ -10,7 +10,7 @@ public class LevelGenerator : MonoBehaviour
 
     public List<Floor> floors = new List<Floor>();
     public List<Floor> floorsSpawned = new List<Floor>();
-    private List<Floor> nextFloorsSpawned = new List<Floor>();
+    public List<Floor> nextFloorsSpawned = new List<Floor>();
 
     public List<Background> backgrounds = new List<Background>();
     private List<Background> backgroundSpawned = new List<Background>();
@@ -213,7 +213,7 @@ public class LevelGenerator : MonoBehaviour
         firstObstacleToSpawn.Initialize();
         nextObstaclesSpawned.Add(firstObstacleToSpawn);
 
-
+        
         while (nextFloorsSpawned[nextFloorsSpawned.Count - 1].transform.position.x - nextObstaclesSpawned[nextObstaclesSpawned.Count - 1].exitPoint.position.x > 0)
         {
             Vector3 lastExitPoint = nextObstaclesSpawned[nextObstaclesSpawned.Count - 1].exitPoint.position;
