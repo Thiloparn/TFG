@@ -7,6 +7,7 @@ public class Obstacle : MonoBehaviour
 
     private Rigidbody2D rigidBody;
     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer brokenSpriteRenderer;
     public Transform exitPoint;
 
     public bool isStatic, isBreakable, isBroken;
@@ -18,7 +19,7 @@ public class Obstacle : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D theObject)
     {
-        if (theObject.tag == "Player" && !Player.sharedInstance.isInvincible && !Player.sharedInstance.isUsingShortcut)
+        if (theObject.tag == "Player" && !Player.sharedInstance.isInvincible && !Player.sharedInstance.isUsingShortcut && !this.isBroken)
         { 
             Player.sharedInstance.animator.SetBool("IsHitted", true);
             Player.sharedInstance.obstacleHittedInfo.Add(this.transform.position);
@@ -41,6 +42,10 @@ public class Obstacle : MonoBehaviour
     void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        if(brokenSpriteRenderer != null)
+        {
+            brokenSpriteRenderer.enabled = false;
+        }
     }
 
 
@@ -97,7 +102,23 @@ public class Obstacle : MonoBehaviour
 
     public void brake()
     {
+        this.speed = 0;
+        this.isBroken = true;
+        spriteRenderer.enabled = false;
+        brokenSpriteRenderer.enabled = true;
+        InvokeRepeating("flash", 0f, 0.1f);
+        Invoke("destroy", 0.5f);
+    }
+
+    void flash()
+    {
+        brokenSpriteRenderer.enabled = !brokenSpriteRenderer.enabled;
+    }
+
+    void destroy()
+    {
         LevelGenerator.sharedInstance.obstaclesSpawned.Remove(this);
         Destroy(this.gameObject);
     }
+
 }
