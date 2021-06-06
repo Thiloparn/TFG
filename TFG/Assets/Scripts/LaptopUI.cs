@@ -22,15 +22,26 @@ public class LaptopUI : MonoBehaviour
             && !PauseMenu.sharedInstance.isActive)
         {
             player.animator.SetTrigger("IsAttacking");
-            Collider2D[] hitObstacles = Physics2D.OverlapCircleAll(Player.sharedInstance.attackPoint.position, Player.sharedInstance.attackRange, obstacleLayer);
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(Player.sharedInstance.attackPoint.position, Player.sharedInstance.attackRange, obstacleLayer);
 
-            slider.value -= hitObstacles.Length > 0 ? 1 : 0;
-
-            foreach(Collider2D obstacleCollider in hitObstacles)
+            List<Obstacle> hitObstacles = new List<Obstacle>();
+            foreach(Collider2D obstacleCollider in hitColliders)
             {
                 Obstacle obstacle = obstacleCollider.GetComponent<Obstacle>();
-                //obstacle.isBroken = obstacle.isBreakable ? true : false;
-                obstacle.brake();
+                if (!obstacle.isBroken)
+                {
+                    hitObstacles.Add(obstacle);
+                }
+            }
+
+            slider.value -= hitObstacles.Count > 0 ? 1 : 0;
+
+            foreach(Obstacle obstacle in hitObstacles)
+            {
+                if (obstacle.isBreakable)
+                {
+                    obstacle.brake();
+                }
             }
         }
     }
