@@ -46,41 +46,21 @@ public class LevelGenerator : MonoBehaviour
         sharedInstance = this;
         Random.InitState((int) System.DateTime.Now.Ticks);
 
-        if(SceneManager.GetActiveScene().name == "Game")
-        {
-            zone = "Community";
-            level = 4;
+        zone = "Community";
+        level = 4;
 
-            spawnFloorsAndBackgrounds(this.transform.position);
+        spawnFloorsAndBackgrounds(this.transform.position);
 
-            spawnWalls();
+        spawnWalls();
 
-            spawnObstacles();
+        spawnObstacles();
 
-            spawnStairs();
+        spawnStairs();
 
-            spawnShortcut();
+        spawnShortcut();
 
-            clearLevel();
-        } 
-        else
-        {
-            zone = "Metropolis";
-
-            spawnFloorsAndBackgrounds(this.transform.position);
-
-            spawnWalls();
-
-            destroyOneWall(1);
-
-            spawnObstacles();
-
-            spawnShortcut();
-
-            finish = (Finish)Instantiate(finish, nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position, Quaternion.identity);
-
-            clearLevel();
-        }
+        clearLevel();
+        
         
     }
 
@@ -116,7 +96,7 @@ public class LevelGenerator : MonoBehaviour
                 useStairOrElevator();
             }
 
-            if (playerPosition >= endOfLevel && nextFloorsSpawned.Count == 0 && SceneManager.GetActiveScene().name == "Game")
+            if (playerPosition >= endOfLevel && nextFloorsSpawned.Count == 0)
             {
                 zone = "University";
 
@@ -136,7 +116,7 @@ public class LevelGenerator : MonoBehaviour
 
         if (nextFloorsSpawned.Count > 0)
         {
-            if (playerPosition >= nextFloorsSpawned[2].transform.position.x && SceneManager.GetActiveScene().name == "Game")
+            if (playerPosition >= nextFloorsSpawned[2].transform.position.x)
             {
                 clearLevel();
             }
@@ -460,8 +440,9 @@ public class LevelGenerator : MonoBehaviour
 
         if (zone == "University" && level == 4)
         {
-            destroyOneWall(1);
-            finish = (Finish)Instantiate(finish, nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position, Quaternion.identity);
+            Vector3 finishPosition = new Vector3(nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position.x - 32, nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position.y, 
+                nextFloorsSpawned[nextFloorsSpawned.Count - 1].exitPoint.transform.position.z);
+            finish = (Finish)Instantiate(finish, finishPosition, Quaternion.identity);
         } 
         else if (zone == "Community" && level == 0)
         {
