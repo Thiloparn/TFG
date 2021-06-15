@@ -7,3 +7,4 @@ En este repositorio se pueden encontrar:
 - Documentación: comporta toda la documentación generada a lo largo del proyecto.  
 - Versiones Documentación: la especificaiones de los cambios que comporta cada versión de Documentación.
 - TFG: el código del juego desarrollado en Unity.
+- Manual de uso: manual para poder ejecutar el juego y saber como jugar.
