@@ -44,3 +44,6 @@ v4.0:
 
 v4.1:
 - Reorganización de las actividades de la cuarta iteración.
+
+v5.0:
+- Versión incial de la fase de cierre.
