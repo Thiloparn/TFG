@@ -1,0 +1,3 @@
+Para poder ejecutar el juego en Windows, se utilizará el archivo WayTooLate.exe en la careta Windows.
+
+Para poder ejecutar el juego en MacOs, se utilizará el archivo WayTooLate en la carpeta MacOs.app -> Contents -> MacOs.
