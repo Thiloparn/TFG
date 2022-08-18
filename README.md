@@ -4,7 +4,7 @@ Contenido:
 
 - Código: Contiene el código del juego diseñado en Unity así como el archivo Compila.txt, con instrucciones de compilación.
 - Ejecutable: Contiene la aplicación del juego para su ejecución, y el archivo Ejecuta.txt, con las instrucciones para hacerlo.
-- Documentos: Contiene toda la documentación del proyuecto.
+- Documentos: Contiene toda la documentación del proyecto.
 	- Fuentes: Contiene las fuentes de la memoria.
 	- Memoria: Contiene la memoría y los archivos relevantes a ella.		
 		- GDD: el Game Design Document en el que se describe el juego.
